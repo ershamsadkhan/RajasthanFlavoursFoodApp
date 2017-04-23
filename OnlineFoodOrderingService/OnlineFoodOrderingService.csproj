@@ -122,6 +122,7 @@
     <Content Include="bin\System.Net.Http.Formatting.dll" />
     <Content Include="bin\System.Web.Http.dll" />
     <Content Include="bin\System.Web.Http.WebHost.dll" />
+    <Content Include="DatabaseScripts\Table\Category.sql" />
     <Content Include="DatabaseScripts\Table\Users.sql" />
     <Content Include="Global.asax" />
     <Content Include="scripts\ai.0.15.0-build58334.js" />
