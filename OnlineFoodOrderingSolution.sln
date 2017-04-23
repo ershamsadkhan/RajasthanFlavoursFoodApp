@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineFoodOrderingService",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineFoodOrderingService.Tests", "OnlineFoodOrderingService.Tests\OnlineFoodOrderingService.Tests.csproj", "{74A62062-6EEF-49A4-BB26-1F8774DD570C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineFoodOrderingWeb", "OnlineFoodOrderingWeb\OnlineFoodOrderingWeb.csproj", "{49ABF322-6E2B-4E46-BF5A-0E4F6471E454}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{74A62062-6EEF-49A4-BB26-1F8774DD570C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74A62062-6EEF-49A4-BB26-1F8774DD570C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74A62062-6EEF-49A4-BB26-1F8774DD570C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49ABF322-6E2B-4E46-BF5A-0E4F6471E454}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49ABF322-6E2B-4E46-BF5A-0E4F6471E454}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49ABF322-6E2B-4E46-BF5A-0E4F6471E454}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49ABF322-6E2B-4E46-BF5A-0E4F6471E454}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
