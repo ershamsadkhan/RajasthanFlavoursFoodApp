@@ -6,7 +6,7 @@ using System.Web;
 
 namespace OnlineFoodOrderingService.Models
 {
-    public class Settings
+    public static class Settings
     {
         public static string ConnectionString
         {

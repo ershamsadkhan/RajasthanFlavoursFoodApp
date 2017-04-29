@@ -10,5 +10,7 @@ namespace OnlineFoodOrderingService.DTO.User
         public long Userid { get; set; }
         public string UserName { get; set; }
         public string UserPwd { get; set; }
+        public string PrimaryAddress { get; set; }
+        public bool IsAdmin { get; set; }
     }
 }
