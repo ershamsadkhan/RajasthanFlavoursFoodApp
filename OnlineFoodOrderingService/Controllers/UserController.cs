@@ -1,5 +1,7 @@
 ﻿using OnlineFoodOrderingService.DTO;
 using OnlineFoodOrderingService.DTO.User;
+using OnlineFoodOrderingService.IRepository;
+using OnlineFoodOrderingService.Manager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +14,20 @@ namespace OnlineFoodOrderingService.Controllers
     [RoutePrefix("api/User")]
     public class UserController : ApiController
     {
+        UserManager userManager;
+        Response<UserDto> response;
+
+        public UserController(IUserRepository repository)
+        {
+            userManager = new UserManager(repository);
+            response = new Response<UserDto>();
+        }
+
         [Route("SignUp")]
         [HttpPost]
         public Response<UserDto> SignUp(Request<UserDto> request)
         {
-            Response<UserDto> response = new Response<UserDto>();
+            response = userManager.SignUp(request);
             return response;
         }
 
@@ -24,7 +35,6 @@ namespace OnlineFoodOrderingService.Controllers
         [HttpPost]
         public Response<UserDto> LogIn(Request<UserDto> request)
         {
-            Response<UserDto> response = new Response<UserDto>();
             return response;
         }
     }
