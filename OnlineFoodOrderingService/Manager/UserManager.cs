@@ -19,24 +19,32 @@ namespace OnlineFoodOrderingService.Manager
             response = new Response<UserDto>();
         }
 
+
+
         #region public methods
         public Response<UserDto> SignUp(Request<UserDto> request)
         {
             response = ValidateUser(request);
             if (response.Status == true)
             {
-                response=repository.SignUp(request);
+                response = repository.SignUp(request);
             }
             return response;
         }
 
         #endregion
-
         #region private methods
         private Response<UserDto> ValidateUser(Request<UserDto> request)
         {
-            response.Status = true;
+            response = repository.GetUserDetails(request);
+            if (response.Status == true)
+            {
+                response.Status = false;
+                response.ErrMsg = "User already exists";
+                
+            }
             return response;
+            
         }
         #endregion
     }

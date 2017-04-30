@@ -11,5 +11,6 @@ namespace OnlineFoodOrderingService.IRepository
     public interface IUserRepository
     {
          Response<UserDto> SignUp(Request<UserDto> request);
+        Response<UserDto> GetUserDetails(Request<UserDto> request);
     }
 }
