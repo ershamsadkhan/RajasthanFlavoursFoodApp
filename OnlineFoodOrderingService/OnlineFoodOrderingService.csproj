@@ -187,6 +187,9 @@
     <Content Include="bin\System.Web.Http.WebHost.dll" />
     <Content Include="bin\System.Web.Mvc.dll" />
     <Content Include="bin\System.Web.Mvc.xml" />
+    <Content Include="DatabaseScripts\StoredProcedures\Usp_AddCategory.sql" />
+    <Content Include="DatabaseScripts\StoredProcedures\Usp_AddItem.sql" />
+    <Content Include="DatabaseScripts\StoredProcedures\Usp_GetItemsList.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\Usp_UserSignUp.sql" />
     <Content Include="DatabaseScripts\Table\Category.sql" />
     <Content Include="DatabaseScripts\Table\Users.sql" />
