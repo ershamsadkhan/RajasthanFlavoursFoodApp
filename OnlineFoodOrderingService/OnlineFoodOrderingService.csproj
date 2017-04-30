@@ -213,21 +213,31 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="DTO\Item\CategoryDto.cs" />
+    <Compile Include="DTO\Item\ItemDto.cs" />
+    <Compile Include="DTO\Order\OrderDto.cs" />
     <Compile Include="DTO\Request.cs" />
     <Compile Include="DTO\Response.cs" />
     <Compile Include="DTO\User\UserDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="IRepository\IItemRepository.cs" />
+    <Compile Include="IRepository\IOrderRepository.cs" />
     <Compile Include="IRepository\IUserRepository.cs" />
+    <Compile Include="Manager\ItemManager.cs" />
+    <Compile Include="Manager\OrderManager.cs" />
     <Compile Include="Manager\UserManager.cs" />
     <Compile Include="Models\Settings.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SQLRepository\SQLItemRepository.cs" />
+    <Compile Include="SQLRepository\SQLOrderRepository.cs" />
     <Compile Include="SQLRepository\SQLUserRepository.cs" />
   </ItemGroup>
   <ItemGroup>

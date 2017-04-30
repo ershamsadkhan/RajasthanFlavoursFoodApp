@@ -73,6 +73,7 @@ namespace OnlineFoodOrderingService.SQLRepository
             }
             return response;
         }
+
         public Response<UserDto> GetUserDetails(Request<UserDto> request)
         {
             
