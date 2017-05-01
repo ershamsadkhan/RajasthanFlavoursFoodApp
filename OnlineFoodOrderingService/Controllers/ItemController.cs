@@ -29,6 +29,7 @@ namespace OnlineFoodOrderingService.Controllers
         [HttpPost]
         public Response<CategoryDto> GetItems(Request<CategoryDto> request)
         {
+            response = itemManager.GetItems(request);
             return response;
         }
 

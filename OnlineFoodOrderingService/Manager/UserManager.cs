@@ -43,6 +43,11 @@ namespace OnlineFoodOrderingService.Manager
                 response.ErrMsg = "User already exists";
                 
             }
+            else
+            {
+                response.Status = true;
+                response.ErrMsg = "";
+            }
             return response;
             
         }

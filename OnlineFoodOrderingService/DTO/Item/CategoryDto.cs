@@ -12,5 +12,10 @@ namespace OnlineFoodOrderingService.DTO.Item
         public string CategoryDescription { get; set; }
 
         public IList<ItemDto> itemDtoList { get; set; }
+
+        public CategoryDto()
+        {
+            this.itemDtoList = new List<ItemDto>();
+        }
     }
 }

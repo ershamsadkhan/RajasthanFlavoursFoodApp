@@ -55,7 +55,7 @@ namespace OnlineFoodOrderingService.SQLRepository
 
                     da.Fill(ds);
                     response.Status = Convert.ToBoolean(ds.Tables[0].Rows[0]["Status"]);
-                    response.ErrMsg = ds.Tables[0].Rows[1]["ErrMsg"].ToString();
+                    response.ErrMsg = ds.Tables[0].Rows[0]["ErrMsg"].ToString();
 
                 }
                 catch (Exception ex)
