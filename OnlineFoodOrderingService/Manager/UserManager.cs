@@ -1,10 +1,11 @@
 ﻿using OnlineFoodOrderingService.DTO;
 using OnlineFoodOrderingService.DTO.User;
 using OnlineFoodOrderingService.IRepository;
+using System.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+
 
 namespace OnlineFoodOrderingService.Manager
 {
@@ -12,6 +13,7 @@ namespace OnlineFoodOrderingService.Manager
     {
         Response<UserDto> response;
         IUserRepository repository;
+   
 
         public UserManager(IUserRepository repository)
         {
@@ -20,8 +22,8 @@ namespace OnlineFoodOrderingService.Manager
         }
 
 
-
-        #region public methods
+        //public methods
+        #region 
         public Response<UserDto> SignUp(Request<UserDto> request)
         {
             response = ValidateUser(request);
@@ -33,7 +35,27 @@ namespace OnlineFoodOrderingService.Manager
         }
 
         #endregion
-        #region private methods
+
+        #region 
+        public string LogIn(Request<UserDto> request)
+        {
+            response = repository.GetLogInDetails(request);
+            if (response.Status == true)
+            {
+                string UserName = response.ObjList[0].UserName.ToString();
+                HttpContext.Current.Session["UserName"] = UserName;
+            }
+            else
+            {
+                HttpContext.Current.Session["UserName"] = response.ErrMsg;
+            }
+            return HttpContext.Current.Session["UserName"].ToString();
+        }
+
+        #endregion
+        // private methods
+     
+        #region 
         private Response<UserDto> ValidateUser(Request<UserDto> request)
         {
             response = repository.GetUserDetails(request);
@@ -47,5 +69,6 @@ namespace OnlineFoodOrderingService.Manager
             
         }
         #endregion
+
     }
 }

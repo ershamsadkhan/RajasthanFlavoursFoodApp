@@ -12,5 +12,6 @@ namespace OnlineFoodOrderingService.IRepository
     {
          Response<UserDto> SignUp(Request<UserDto> request);
         Response<UserDto> GetUserDetails(Request<UserDto> request);
+        Response<UserDto> GetLogInDetails(Request<UserDto> request);
     }
 }

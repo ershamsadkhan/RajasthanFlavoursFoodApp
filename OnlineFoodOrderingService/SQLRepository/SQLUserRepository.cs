@@ -128,5 +128,63 @@ namespace OnlineFoodOrderingService.SQLRepository
             }
             return response;
         }
+        public Response<UserDto> GetLogInDetails(Request<UserDto> request)
+        {
+
+            IList<UserDto> UserList = new List<UserDto>();
+            DataSet ds = new DataSet("LoginDetails");
+            SqlConnection con = new SqlConnection(connection);
+
+            SqlCommand command = new SqlCommand("select UserName,PrimaryAddress from dbo.Users where UserName=@UserName and UserPwd=@UserPwd", con);
+            try
+            {
+                command.Parameters.Add("@UserName", SqlDbType.VarChar);
+                command.Parameters.Add("@UserPwd", SqlDbType.VarChar);
+                command.Parameters["@UserName"].Value = request.Obj.UserName;
+                command.Parameters["@UserPwd"].Value = request.Obj.UserPwd;
+
+
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = command;
+
+                da.Fill(ds);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    UserList.Add(new UserDto
+                    {
+                        UserName = ds.Tables[0].Rows[i]["UserName"].ToString(),
+                        PrimaryAddress = ds.Tables[0].Rows[i]["PrimaryAddress"].ToString(),
+                          UserPwd = ds.Tables[0].Rows[i]["UserPwd"].ToString()
+                    });
+
+                }
+                if (UserList.Count > 0)
+                {
+                    response.Status = true;
+                    response.ErrMsg = "";
+                    response.ObjList = UserList;
+                }
+                else
+                {
+                    response.Status = false;
+                    response.ErrMsg = "User does not exist";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                response.Status = false;
+                response.ErrMsg = ex.Message;
+            }
+            finally
+            {
+                if (con.State == ConnectionState.Open)
+                {
+                    con.Close();
+                }
+            }
+            return response;
+        }
     }
 }
