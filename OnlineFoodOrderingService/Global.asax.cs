@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OnlineFoodOrderingService.Handler;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,6 +13,7 @@ namespace OnlineFoodOrderingService
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            GlobalConfiguration.Configuration.MessageHandlers.Add(new AuthHandler());
         }
     }
 }

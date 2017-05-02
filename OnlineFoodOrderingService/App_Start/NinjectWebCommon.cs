@@ -66,6 +66,8 @@ namespace OnlineFoodOrderingService.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<IUserRepository>().To<SQLUserRepository>();
+            kernel.Bind<IItemRepository>().To<SQLItemRepository>();
+            kernel.Bind<IOrderRepository>().To<SQLOrderRepository>();
         }        
     }
 }
