@@ -136,7 +136,7 @@ namespace OnlineFoodOrderingService.SQLRepository
             DataSet ds = new DataSet("LoginDetails");
             SqlConnection con = new SqlConnection(connection);
 
-            SqlCommand command = new SqlCommand("select UserName,PrimaryAddress from dbo.Users where UserName=@UserName and UserPwd=@UserPwd", con);
+            SqlCommand command = new SqlCommand("select UserName,PrimaryAddress,UserPwd from dbo.Users where UserName=@UserName and UserPwd=@UserPwd", con);
             try
             {
                 command.Parameters.Add("@UserName", SqlDbType.VarChar);

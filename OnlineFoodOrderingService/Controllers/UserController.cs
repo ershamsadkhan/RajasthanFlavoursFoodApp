@@ -35,6 +35,7 @@ namespace OnlineFoodOrderingService.Controllers
         [HttpPost]
         public Response<UserDto> LogIn(Request<UserDto> request)
         {
+            response = userManager.LogIn(request);
             return response;
         }
     }

@@ -37,19 +37,10 @@ namespace OnlineFoodOrderingService.Manager
         #endregion
 
         #region 
-        public string LogIn(Request<UserDto> request)
+        public Response<UserDto> LogIn(Request<UserDto> request)
         {
             response = repository.GetLogInDetails(request);
-            if (response.Status == true)
-            {
-                string UserName = response.ObjList[0].UserName.ToString();
-                HttpContext.Current.Session["UserName"] = UserName;
-            }
-            else
-            {
-                HttpContext.Current.Session["UserName"] = response.ErrMsg;
-            }
-            return HttpContext.Current.Session["UserName"].ToString();
+            return response;
         }
 
         #endregion

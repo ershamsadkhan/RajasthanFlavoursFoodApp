@@ -1,4 +1,5 @@
-﻿using OnlineFoodOrderingService.DTO;
+﻿using OnlineFoodOrderingService.Authorization;
+using OnlineFoodOrderingService.DTO;
 using OnlineFoodOrderingService.DTO.Item;
 using OnlineFoodOrderingService.IRepository;
 using OnlineFoodOrderingService.Manager;
@@ -41,6 +42,7 @@ namespace OnlineFoodOrderingService.Controllers
             return response;
         }
 
+        [AuthorizeUser]
         [Route("AddCategory")]
         [HttpPost]
         public Response<CategoryDto> AddCategory(Request<CategoryDto> request)
