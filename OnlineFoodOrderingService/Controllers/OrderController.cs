@@ -25,7 +25,7 @@ namespace OnlineFoodOrderingService.Controllers
             response = new Response<OrderDto>();
         }
 
-        [AuthorizeUser]
+        //[AuthorizeUser]
         [Route("PlaceOrder")]
         [HttpPost]
         public Response<OrderDto> PlaceOrder(Request<OrderDto> request)

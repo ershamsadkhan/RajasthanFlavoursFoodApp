@@ -223,6 +223,7 @@
     <Compile Include="DTO\Item\CategoryDto.cs" />
     <Compile Include="DTO\Item\ItemDto.cs" />
     <Compile Include="DTO\Order\OrderDto.cs" />
+    <Compile Include="DTO\Order\OrderLineItemDto.cs" />
     <Compile Include="DTO\Request.cs" />
     <Compile Include="DTO\Response.cs" />
     <Compile Include="DTO\User\UserDto.cs" />
@@ -236,6 +237,8 @@
     <Compile Include="Manager\ItemManager.cs" />
     <Compile Include="Manager\OrderManager.cs" />
     <Compile Include="Manager\UserManager.cs" />
+    <Compile Include="Models\Order\Order.cs" />
+    <Compile Include="Models\Order\OrderLineItem.cs" />
     <Compile Include="Models\Settings.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />

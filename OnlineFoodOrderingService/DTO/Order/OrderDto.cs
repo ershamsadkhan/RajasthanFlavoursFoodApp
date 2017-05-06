@@ -7,5 +7,11 @@ namespace OnlineFoodOrderingService.DTO.Order
 {
     public class OrderDto
     {
+        public long OrderNo { get; set; }
+        public DateTime OrderDate { get; set; }
+        public long GrandTotal { get; set; }
+        public long UserId { get; set; }
+
+        public IList<OrderLineItemDto> OrderLineItemList { get; set; }
     }
 }
