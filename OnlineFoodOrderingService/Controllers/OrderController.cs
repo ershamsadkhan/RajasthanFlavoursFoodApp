@@ -4,6 +4,7 @@ using OnlineFoodOrderingService.DTO.Order;
 using OnlineFoodOrderingService.DTO.User;
 using OnlineFoodOrderingService.IRepository;
 using OnlineFoodOrderingService.Manager;
+using OnlineFoodOrderingService.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,12 +26,30 @@ namespace OnlineFoodOrderingService.Controllers
             response = new Response<OrderDto>();
         }
 
-        //[AuthorizeUser]
+        [AuthorizeUser]
         [Route("PlaceOrder")]
         [HttpPost]
         public Response<OrderDto> PlaceOrder(Request<OrderDto> request)
         {
             response=orderManager.PlaceOrder(request);
+            return response;
+        }
+
+        [AuthorizeUser]
+        [Route("OrderDelivered")]
+        [HttpPost]
+        public Response<OrderDto> OrderDelivered(Request<OrderDto> request)
+        {
+            response = orderManager.UpdateOrderStatus(request,OrderStatus.Delivered);
+            return response;
+        }
+
+        [AuthorizeUser]
+        [Route("CancelOrder")]
+        [HttpPost]
+        public Response<OrderDto> OrderCancelled(Request<OrderDto> request)
+        {
+            response = orderManager.UpdateOrderStatus(request, OrderStatus.Cancelled);
             return response;
         }
 

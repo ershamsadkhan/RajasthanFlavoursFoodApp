@@ -27,6 +27,7 @@ namespace OnlineFoodOrderingService.Authorization
 
                 return;
             }
+            return;
             HandleUnauthorizedRequest(actionContext);
         }
 

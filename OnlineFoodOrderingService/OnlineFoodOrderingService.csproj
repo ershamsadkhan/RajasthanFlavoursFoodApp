@@ -237,6 +237,8 @@
     <Compile Include="Manager\ItemManager.cs" />
     <Compile Include="Manager\OrderManager.cs" />
     <Compile Include="Manager\UserManager.cs" />
+    <Compile Include="Models\Enums\GetDescription.cs" />
+    <Compile Include="Models\Enums\OrderStatus.cs" />
     <Compile Include="Models\Order\Order.cs" />
     <Compile Include="Models\Order\OrderLineItem.cs" />
     <Compile Include="Models\Settings.cs" />

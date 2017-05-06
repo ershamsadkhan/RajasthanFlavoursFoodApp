@@ -1,6 +1,7 @@
 ﻿using OnlineFoodOrderingService.DTO;
 using OnlineFoodOrderingService.DTO.Order;
 using OnlineFoodOrderingService.IRepository;
+using OnlineFoodOrderingService.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,16 @@ namespace OnlineFoodOrderingService.Manager
             if (response.Status == true)
             {
                 response = repository.PlaceOrder(request);
+            }
+            return response;
+        }
+
+        public Response<OrderDto> UpdateOrderStatus(Request<OrderDto> request,OrderStatus orderStatus)
+        {
+            response = ValidateOrder(request);
+            if (response.Status == true)
+            {
+                response = repository.UpdateOrderStatus(request, orderStatus);
             }
             return response;
         }

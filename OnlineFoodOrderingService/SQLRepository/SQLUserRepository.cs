@@ -136,7 +136,7 @@ namespace OnlineFoodOrderingService.SQLRepository
             DataSet ds = new DataSet("LoginDetails");
             SqlConnection con = new SqlConnection(connection);
 
-            SqlCommand command = new SqlCommand("select UserName,PrimaryAddress,UserPwd from dbo.Users where UserName=@UserName and UserPwd=@UserPwd", con);
+            SqlCommand command = new SqlCommand("select UserName,PrimaryAddress,UserPwd,Userid from dbo.Users where UserName=@UserName and UserPwd=@UserPwd", con);
             try
             {
                 command.Parameters.Add("@UserName", SqlDbType.VarChar);
@@ -156,7 +156,8 @@ namespace OnlineFoodOrderingService.SQLRepository
                     {
                         UserName = ds.Tables[0].Rows[i]["UserName"].ToString(),
                         PrimaryAddress = ds.Tables[0].Rows[i]["PrimaryAddress"].ToString(),
-                          UserPwd = ds.Tables[0].Rows[i]["UserPwd"].ToString()
+                        UserPwd = ds.Tables[0].Rows[i]["UserPwd"].ToString(),
+                        Userid = Convert.ToInt64(ds.Tables[0].Rows[i]["Userid"])
                     });
 
                 }

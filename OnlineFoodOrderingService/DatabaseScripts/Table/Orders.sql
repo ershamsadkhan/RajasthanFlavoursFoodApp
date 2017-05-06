@@ -1,0 +1,11 @@
+IF NOT EXISTS(SELECT 1 FROM information_schema.tables WHERE table_name = 'Orders')
+BEGIN
+	CREATE TABLE Orders(Userid NUMERIC(8) NOT NULL FOREIGN KEY REFERENCES Users(Userid),OrderId NUMERIC(8) PRIMARY KEY NOT NULL IDENTITY,
+	OrderDate DateTime)
+END
+
+IF NOT EXISTS(SELECT 1 FROM information_schema.tables WHERE table_name = 'OrderLineItem')
+BEGIN
+	CREATE TABLE OrderLineItem(OrderId NUMERIC(8) NOT NULL FOREIGN KEY REFERENCES Orders(OrderId),OrderLineItemId NUMERIC(8) NOT NULL PRIMARY KEY IDENTITY,
+	Quantity NUMERIC(4) NOT NULL, PriceType NUMERIC(2) NOT NULL,Price NUMERIC(5) NOT NULL)
+END
