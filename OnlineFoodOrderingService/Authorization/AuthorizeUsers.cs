@@ -1,8 +1,19 @@
-﻿using System;
+﻿using OnlineFoodOrderingService.IRepository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using Ninject;
+using OnlineFoodOrderingService.Manager;
+using OnlineFoodOrderingService.DTO;
+using OnlineFoodOrderingService.DTO.User;
+using System.Text;
+using System.Reflection;
+using Ninject.Web.Common;
+using OnlineFoodOrderingService.SQLRepository;
 
 namespace OnlineFoodOrderingService.Authorization
 {
@@ -10,37 +21,46 @@ namespace OnlineFoodOrderingService.Authorization
     public class AuthorizeUser : AuthorizeAttribute
     {
         public override void OnAuthorization(System.Web.Http.Controllers.HttpActionContext actionContext)
-
         {
-
             if (AuthorizeRequest(actionContext))
-
             {
 
                 return;
-
             }
-
             HandleUnauthorizedRequest(actionContext);
-
         }
 
         protected override void HandleUnauthorizedRequest(System.Web.Http.Controllers.HttpActionContext actionContext)
-
         {
-
-            //Code to handle unauthorized request
-
+            throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Unauthorized) { ReasonPhrase = "You better back Off!" });
         }
 
         private bool AuthorizeRequest(System.Web.Http.Controllers.HttpActionContext actionContext)
-
         {
+            Response<UserDto> response = new Response<UserDto>();
+            Request<UserDto> request = new Request<UserDto>();
 
-            //Write your code here to perform authorization
+            var userMnager = new UserManager(new SQLUserRepository());
+            var re = actionContext.Request;
+            var headers = re.Headers;
+            string username = "";
+            string password = "";
 
-            return true;
+            if (headers.Contains("username") && headers.Contains("password"))
+            {
+                username = headers.GetValues("username").First();
+                password = headers.GetValues("password").First();
+            }
 
+
+            request.Obj = new UserDto()
+            {
+                UserName = username,
+                UserPwd = password
+            };
+
+            response = userMnager.LogIn(request);
+            return response.Status;
         }
 
 

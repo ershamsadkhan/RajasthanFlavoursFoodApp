@@ -1,4 +1,5 @@
-﻿using OnlineFoodOrderingService.DTO;
+﻿using OnlineFoodOrderingService.Authorization;
+using OnlineFoodOrderingService.DTO;
 using OnlineFoodOrderingService.DTO.Order;
 using OnlineFoodOrderingService.DTO.User;
 using OnlineFoodOrderingService.IRepository;
@@ -24,10 +25,12 @@ namespace OnlineFoodOrderingService.Controllers
             response = new Response<OrderDto>();
         }
 
+        [AuthorizeUser]
         [Route("PlaceOrder")]
         [HttpPost]
         public Response<OrderDto> PlaceOrder(Request<OrderDto> request)
         {
+            response=orderManager.PlaceOrder(request);
             return response;
         }
 
