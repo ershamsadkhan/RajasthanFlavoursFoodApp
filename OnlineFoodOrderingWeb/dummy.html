@@ -3,16 +3,16 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Ragsthan Flavours Food</title>
+    <title>Admin LTE</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="icon" href="img/icon.png" />
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link href="dataTables.bootstrap.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/AdminLTE.min.css">
     <link rel="stylesheet" href="css/skin-blue.min.css">
-    <link href="css/daterangepicker.css" rel="stylesheet" />
-    <link href="css/dataTables.bootstrap.css" rel="stylesheet" />
+    <link href="daterangepicker.css" rel="stylesheet" />
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -34,13 +34,14 @@
             margin-bottom: -30px;
         }
     </style>
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
         <header class="main-header">
             <a href="order.html" class="logo">
-                <span class="logo-mini"><b>R</b>FF</span>
-                <span class="logo-lg"><b>Rajsthan</b> Flavours Food</span>
+                <span class="logo-mini"><b>A</b>LTE</span>
+                <span class="logo-lg"><b>Admin</b> LTE</span>
             </a>
             <!-- Header Navbar -->
             <nav class="navbar navbar-static-top" role="navigation">
@@ -89,41 +90,15 @@
         <aside class="main-sidebar">
             <section class="sidebar">
                 <ul class="sidebar-menu">
-                    <li class="active"><a href="#"><i class="fa fa-file-text"></i> <span>Orders</span></a></li>
-                    <li><a href="#"><i class="fa fa-users"></i> <span>Users</span></a></li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-cubes"></i> <span>Category</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="#">Add Category</a></li>
-                            <li><a href="#">Categories</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#"><i class="fa fa-picture-o"></i> <span>Add Images</span></a></li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-cutlery"></i> <span>Manage Foods</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="#">Add Food</a></li>
-                            <li><a href="#">Food List</a></li>
-                        </ul>
-                    </li>
+                    <li class="active"><a href="#"><i class="fa fa-file-text"></i> <span>Demo Page</span></a></li>
+                    <li><a href="#"><i class="fa fa-users"></i> <span>Demo User</span></a></li>
                 </ul>
             </section>
         </aside>
         <div class="content-wrapper">
             <section class="content-header">
                 <h1>
-                    Orders
-                    <small>List</small>
+                    Dashboard
                 </h1>
             </section>
             <!-- Main content -->
@@ -299,10 +274,10 @@
     <script src="script/jquery-2.2.3.min.js"></script>
     <script src="script/bootstrap.min.js"></script>
     <script src="script/app.min.js"></script>
-    <script src="script/jquery.dataTables.min.js"></script>
-    <script src="script/dataTables.bootstrap.min.js"></script>
-    <script src="script/moment.min.js"></script>
-    <script src="script/daterangepicker.js"></script>
+    <script src="jquery.dataTables.js"></script>
+    <script src="dataTables.bootstrap.js"></script>
+    <script src="moment.js"></script>
+    <script src="daterangepicker.js"></script>
     <script>
         //Date range picker
         $('#reservation').daterangepicker();
