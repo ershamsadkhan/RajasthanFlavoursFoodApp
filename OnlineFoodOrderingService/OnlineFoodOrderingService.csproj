@@ -189,6 +189,9 @@
     <Content Include="bin\System.Web.Http.WebHost.dll" />
     <Content Include="bin\System.Web.Mvc.dll" />
     <Content Include="bin\System.Web.Mvc.xml" />
+    <Content Include="DatabaseScripts\DDL\Items.sql" />
+    <Content Include="DatabaseScripts\DDL\OrderLineItem.sql" />
+    <Content Include="DatabaseScripts\DDL\User.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\Usp_AddCategory.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\Usp_AddItem.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\Usp_GetItemsList.sql" />
@@ -268,7 +271,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="DatabaseScripts\DDL\" />
     <Folder Include="DatabaseScripts\DML\" />
     <Folder Include="DatabaseScripts\Functons\" />
     <Folder Include="Models\User\" />
