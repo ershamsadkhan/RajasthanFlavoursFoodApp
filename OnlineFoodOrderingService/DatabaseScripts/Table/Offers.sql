@@ -1,0 +1,4 @@
+IF NOT EXISTS(SELECT 1 FROM information_schema.tables WHERE table_name = 'Offers')
+BEGIN
+	CREATE TABLE Offers(Offerid NUMERIC(8) NOT NULL PRIMARY KEY IDENTITY,OfferHeader VARCHAR(4000))
+END

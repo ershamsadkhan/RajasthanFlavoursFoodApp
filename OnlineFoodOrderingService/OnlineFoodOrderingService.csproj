@@ -73,6 +73,10 @@
       <HintPath>..\packages\Microsoft.ApplicationInsights.1.2.3\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Azure.AppService.ApiApps.Service, Version=0.9.16.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.AppService.ApiApps.Service.0.9.16\lib\net45\Microsoft.Azure.AppService.ApiApps.Service.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -96,6 +100,10 @@
     </Reference>
     <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
       <HintPath>..\packages\Swashbuckle.Core.5.5.3\lib\net40\Swashbuckle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.4.0.0\lib\net45\System.IdentityModel.Tokens.Jwt.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http" />
@@ -190,11 +198,15 @@
     <Content Include="bin\System.Web.Mvc.dll" />
     <Content Include="bin\System.Web.Mvc.xml" />
     <Content Include="DatabaseScripts\DDL\Items.sql" />
+    <Content Include="DatabaseScripts\DDL\Order.sql" />
     <Content Include="DatabaseScripts\DDL\OrderLineItem.sql" />
     <Content Include="DatabaseScripts\DDL\User.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\Usp_AddCategory.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\Usp_AddItem.sql" />
+    <Content Include="DatabaseScripts\StoredProcedures\Usp_AddOrder.sql" />
+    <Content Include="DatabaseScripts\StoredProcedures\Usp_DeleteOrder.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\Usp_GetItemsList.sql" />
+    <Content Include="DatabaseScripts\StoredProcedures\Usp_UpdateOrderStatus.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\Usp_UserSignUp.sql" />
     <Content Include="DatabaseScripts\Table\Category.sql" />
     <Content Include="DatabaseScripts\Table\Users.sql" />
@@ -256,7 +268,9 @@
     <Compile Include="SQLRepository\SQLUserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
