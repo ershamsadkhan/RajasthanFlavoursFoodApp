@@ -109,9 +109,133 @@ namespace OnlineFoodOrderingService.SQLRepository
             }
             return response;
         }
+
+        public Response<OrderDto> GetOrders(Request<OrderSearch> request)
+        {
+            IList<OrderDto> Orders = new List<OrderDto>();
+            DataSet ds = new DataSet("GetOrders");
+            using (SqlConnection con = new SqlConnection(connection))
+            {
+                try
+                {
+                    //create parameterized query
+                    SqlCommand command = new SqlCommand("Usp_GetOrders", con);
+                    command.CommandType = CommandType.StoredProcedure;
+                    //register
+                    command.Parameters.Add("@Userid", SqlDbType.Int);
+                    command.Parameters.Add("@FromDate", SqlDbType.DateTime);
+                    command.Parameters.Add("@ToDate", SqlDbType.DateTime);
+
+                    //substitute value
+                    command.Parameters["@Userid"].Value = request.Obj.UserId;
+                    command.Parameters["@FromDate"].Value = request.Obj.FromDate ;
+                    command.Parameters["@ToDate"].Value = request.Obj.ToDate;
+                    //con.Open();
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = command;
+
+                    da.Fill(ds);
+
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        Orders.Add(new OrderDto
+                        {
+                            OrderNo = int.Parse(ds.Tables[0].Rows[i]["Orderid"].ToString()),
+                            OrderDate = Convert.ToDateTime(ds.Tables[0].Rows[i]["OrderDate"].ToString()),
+                            GrandTotal = int.Parse(ds.Tables[0].Rows[i]["GrandTotal"].ToString())
+                        });
+                    }
+                    if (Orders.Count == 0)
+                    {
+
+                        response.ErrMsg = "No Records Found";
+                    }
+                    else
+                    {
+                        response.ErrMsg = "Total "+Orders.Count.ToString()+" Records Found";
+                        response.ObjList = Orders;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    response.Status = false;
+                    response.ErrMsg = ex.Message;
+                }
+                finally
+                {
+                    if (con.State == ConnectionState.Open)
+                    {
+                        con.Close();
+                    }
+                }
+            }
+            return response;
+        }
+
+        public Response<OrderDto> GetOrderDetails(Request<OrderDto> request)
+        {
+            IList<OrderLineItemDto> Items = new List<OrderLineItemDto>();
+            DataSet ds = new DataSet("GetOrderDetails");
+            using (SqlConnection con = new SqlConnection(connection))
+            {
+                try
+                {
+                    //create parameterized query
+                    SqlCommand command = new SqlCommand("Usp_GetOrderDetails", con);
+                    command.CommandType = CommandType.StoredProcedure;
+                    //register
+                    command.Parameters.Add("@Orderid", SqlDbType.Int);
+
+                    //substitute value
+                    command.Parameters["@Orderid"].Value = request.Obj.OrderNo;
+                    //con.Open();
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = command;
+
+                    da.Fill(ds);
+
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        Items.Add(new OrderLineItemDto
+                        {
+                         OrderLineItemId= int.Parse(ds.Tables[0].Rows[i]["OrderLineItemId"].ToString()),
+                         ItemId = int.Parse(ds.Tables[0].Rows[i]["Itemid"].ToString()),
+                         ItemHeader =ds.Tables[0].Rows[i]["ItemHeader"].ToString(),
+                         Quantity = int.Parse(ds.Tables[0].Rows[i]["Quantity"].ToString()),
+                         PriceType=Convert.ToInt16(ds.Tables[0].Rows[i]["PriceType"].ToString()),
+                         Price=int.Parse(ds.Tables[0].Rows[i]["Price"].ToString())
+                        });
+                    }
+                    if (Items.Count == 0)
+                    {
+
+                        response.ErrMsg = "No Records Found";
+                    }
+                    else
+                    {
+                        response.Obj.OrderLineItemList=Items;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    response.Status = false;
+                    response.ErrMsg = ex.Message;
+                }
+                finally
+                {
+                    if (con.State == ConnectionState.Open)
+                    {
+                        con.Close();
+                    }
+                }
+            }
+            return response;
+        }
         #endregion
 
-            #region private method
+        #region private method
         private string XmlParseToString(Request<OrderDto> request)
         {
             XElement xmlElements = new XElement("OrderLineItem",

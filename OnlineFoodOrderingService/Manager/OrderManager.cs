@@ -40,6 +40,16 @@ namespace OnlineFoodOrderingService.Manager
             }
             return response;
         }
+        public Response<OrderDto> GetOrders(Request<OrderSearch> request)
+        {
+            response = repository.GetOrders(request);
+            return response;
+        }
+        public Response<OrderDto> GetOrderDetails(Request<OrderDto> request)
+        {
+            response = repository.GetOrderDetails(request);
+            return response;
+        }
         #endregion
 
         #region private methods

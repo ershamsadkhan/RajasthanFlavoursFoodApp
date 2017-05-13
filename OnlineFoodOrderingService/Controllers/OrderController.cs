@@ -53,10 +53,11 @@ namespace OnlineFoodOrderingService.Controllers
             return response;
         }
 
-        [Route("GetOrderList")]
+        [Route("GetOrders")]
         [HttpPost]
-        public Response<OrderDto> GetOrderList(Request<OrderDto> request)
+        public Response<OrderDto> GetOrders(Request<OrderSearch> request)
         {
+            response = orderManager.GetOrders(request);
             return response;
         }
 

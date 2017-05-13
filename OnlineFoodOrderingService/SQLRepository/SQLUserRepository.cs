@@ -163,7 +163,7 @@ namespace OnlineFoodOrderingService.SQLRepository
                 }
                 if (UserList.Count > 0)
                 {
-                    response.Status = true;
+                
                     response.ErrMsg = "";
                     response.ObjList = UserList;
                 }
