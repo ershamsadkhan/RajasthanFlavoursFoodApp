@@ -13,5 +13,7 @@ namespace OnlineFoodOrderingService.IRepository
     {
         Response<OrderDto> PlaceOrder(Request<OrderDto> request);
         Response<OrderDto> UpdateOrderStatus(Request<OrderDto> request, OrderStatus orderStatus);
+        Response<OrderDto> GetOrders(Request<OrderSearch> request);
+        Response<OrderDto> GetOrderDetails(Request<OrderDto> request);
     }
 }

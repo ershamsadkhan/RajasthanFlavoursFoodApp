@@ -10,6 +10,7 @@ namespace OnlineFoodOrderingService.DTO.Order
     {
         public long OrderNo { get; set; }
         public long OrderLineItemId { get; set; }
+        public string ItemHeader { get; set; }
         public int Quantity { get; set; }
         public int Price { get; set; }
         public short PriceType { get; set; }

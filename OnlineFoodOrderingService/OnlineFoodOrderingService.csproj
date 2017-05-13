@@ -192,6 +192,8 @@
     <Content Include="DatabaseScripts\DDL\Items.sql" />
     <Content Include="DatabaseScripts\DDL\OrderLineItem.sql" />
     <Content Include="DatabaseScripts\DDL\User.sql" />
+    <Content Include="DatabaseScripts\StoredProcedures\GetOrderDetails.sql" />
+    <Content Include="DatabaseScripts\StoredProcedures\GetOrders.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\Usp_AddCategory.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\Usp_AddItem.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\Usp_GetItemsList.sql" />
@@ -229,6 +231,7 @@
     <Compile Include="DTO\Item\ItemDto.cs" />
     <Compile Include="DTO\Order\OrderDto.cs" />
     <Compile Include="DTO\Order\OrderLineItemDto.cs" />
+    <Compile Include="DTO\Order\OrderSearch.cs" />
     <Compile Include="DTO\Request.cs" />
     <Compile Include="DTO\Response.cs" />
     <Compile Include="DTO\User\UserDto.cs" />
