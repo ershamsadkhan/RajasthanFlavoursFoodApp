@@ -211,6 +211,8 @@
     <Content Include="DatabaseScripts\StoredProcedures\Usp_UpdateOrderStatus.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\Usp_UserSignUp.sql" />
     <Content Include="DatabaseScripts\Table\Category.sql" />
+    <Content Include="DatabaseScripts\Table\Offers.sql" />
+    <Content Include="DatabaseScripts\Table\Orders.sql" />
     <Content Include="DatabaseScripts\Table\Users.sql" />
     <Content Include="Global.asax" />
     <Content Include="scripts\ai.0.15.0-build58334.js" />
