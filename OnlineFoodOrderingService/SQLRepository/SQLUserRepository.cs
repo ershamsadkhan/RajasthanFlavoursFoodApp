@@ -40,14 +40,18 @@ namespace OnlineFoodOrderingService.SQLRepository
                     command.Parameters.Add("@UserName", SqlDbType.VarChar);
                     command.Parameters.Add("@UserPwd", SqlDbType.VarChar);
                     command.Parameters.Add("@PrimaryAddress", SqlDbType.VarChar);
-                    command.Parameters.Add("@IsAdmin", SqlDbType.Bit);
+					command.Parameters.Add("@UserPhoneNumber", SqlDbType.VarChar);
+					command.Parameters.Add("@UserEmailAddress", SqlDbType.VarChar);
+					command.Parameters.Add("@IsAdmin", SqlDbType.Bit);
 
                     //substitute value
                     command.Parameters["@Userid"].Value = request.Obj.Userid;
                     command.Parameters["@UserName"].Value = request.Obj.UserName;
                     command.Parameters["@UserPwd"].Value = request.Obj.UserPwd;
                     command.Parameters["@PrimaryAddress"].Value = request.Obj.PrimaryAddress;
-                    command.Parameters["@IsAdmin"].Value = request.Obj.IsAdmin;
+					command.Parameters["@UserPhoneNumber"].Value = request.Obj.UserPhoneNumber;
+					command.Parameters["@UserEmailAddress"].Value = request.Obj.UserEmailAddress;
+					command.Parameters["@IsAdmin"].Value = request.Obj.IsAdmin;
 
                     //con.Open();
                     SqlDataAdapter da = new SqlDataAdapter();
@@ -136,7 +140,7 @@ namespace OnlineFoodOrderingService.SQLRepository
             DataSet ds = new DataSet("LoginDetails");
             SqlConnection con = new SqlConnection(connection);
 
-            SqlCommand command = new SqlCommand("select UserName,PrimaryAddress,UserPwd,Userid from dbo.Users where UserName=@UserName and UserPwd=@UserPwd", con);
+            SqlCommand command = new SqlCommand("select UserName,PrimaryAddress,UserPwd,Userid,UserPhoneNumber,UserEmailAddress from dbo.Users where UserName=@UserName and UserPwd=@UserPwd", con);
             try
             {
                 command.Parameters.Add("@UserName", SqlDbType.VarChar);
@@ -157,8 +161,10 @@ namespace OnlineFoodOrderingService.SQLRepository
                         UserName = ds.Tables[0].Rows[i]["UserName"].ToString(),
                         PrimaryAddress = ds.Tables[0].Rows[i]["PrimaryAddress"].ToString(),
                         UserPwd = ds.Tables[0].Rows[i]["UserPwd"].ToString(),
-                        Userid = Convert.ToInt64(ds.Tables[0].Rows[i]["Userid"])
-                    });
+                        Userid = Convert.ToInt64(ds.Tables[0].Rows[i]["Userid"]),
+						UserPhoneNumber = ds.Tables[0].Rows[i]["UserPhoneNumber"].ToString(),
+						UserEmailAddress = ds.Tables[0].Rows[i]["UserEmailAddress"].ToString()
+					});
 
                 }
                 if (UserList.Count > 0)
