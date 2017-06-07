@@ -10,6 +10,9 @@ namespace OnlineFoodOrderingService.DTO.User
         public long Userid { get; set; }
         public string UserName { get; set; }
         public string UserPwd { get; set; }
+        public string Email { get; set; }
+        public string PhoneNo { get; set; }
+        public string DeliveryAddress { get; set; }
         public string PrimaryAddress { get; set; }
 		public string UserPhoneNumber { get; set; }
 		public string UserEmailAddress { get; set; }

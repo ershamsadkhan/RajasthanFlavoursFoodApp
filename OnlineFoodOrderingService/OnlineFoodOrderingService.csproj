@@ -203,6 +203,8 @@
     <Content Include="DatabaseScripts\DDL\User.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\GetOrderDetails.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\GetOrders.sql" />
+    <Content Include="DatabaseScripts\StoredProcedures\UpdateDeliveryAddress.sql" />
+    <Content Include="DatabaseScripts\StoredProcedures\UpdateProfile.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\Usp_AddCategory.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\Usp_AddItem.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\Usp_AddOrder.sql" />
@@ -284,6 +286,9 @@
     </Content>
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <Content Include="SwaggerUI\lib\.DS_Store" />
+    <Content Include="Metadata\deploymentTemplates\apiappconfig.azureresource.json" />
+    <Content Include="apiapp.json" />
+    <None Include="Properties\PublishProfiles\RajasthanFlavours - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

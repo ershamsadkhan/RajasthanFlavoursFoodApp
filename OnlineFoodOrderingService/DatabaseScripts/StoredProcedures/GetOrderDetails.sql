@@ -13,7 +13,7 @@ SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
 		   it.ItemHeader,
 		   it.ImageUrl
 	FROM Orders o
-	inner join OrderLineItem OLI
+	INNER JOIN OrderLineItem OLI
 	on o.OrderId=OLI.OrderId
 	INNER JOIN Items it
 	on OLI.Itemid=it.Itemid
