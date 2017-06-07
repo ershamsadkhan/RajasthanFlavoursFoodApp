@@ -76,7 +76,7 @@ namespace OnlineFoodOrderingService.SQLRepository
 
         public Response<UserDto> GetUserDetails(Request<UserDto> request)
         {
-            
+
             IList<UserDto> UserList = new List<UserDto>();
             DataSet ds = new DataSet("UserDetails");
             SqlConnection con = new SqlConnection(connection);
@@ -86,7 +86,7 @@ namespace OnlineFoodOrderingService.SQLRepository
             {
                 command.Parameters.Add("@UserName", SqlDbType.VarChar);
                 command.Parameters["@UserName"].Value = request.Obj.UserName;
-              
+
 
                 SqlDataAdapter da = new SqlDataAdapter();
                 da.SelectCommand = command;
@@ -113,7 +113,7 @@ namespace OnlineFoodOrderingService.SQLRepository
                     response.Status = false;
                     response.ErrMsg = "User does not exist";
                 }
-              
+
             }
             catch (Exception ex)
             {
@@ -163,7 +163,7 @@ namespace OnlineFoodOrderingService.SQLRepository
                 }
                 if (UserList.Count > 0)
                 {
-                
+
                     response.ErrMsg = "";
                     response.ObjList = UserList;
                 }
@@ -187,6 +187,107 @@ namespace OnlineFoodOrderingService.SQLRepository
                 }
             }
             return response;
+        }
+        public Response<UserDto> UpdateProfile(Request<UserDto> request)
+        {
+
+
+
+            DataSet ds = new DataSet("UpdateResponse");
+            using (SqlConnection con = new SqlConnection(connection))
+            {
+                try
+                {
+                    //create parameterized query
+                    SqlCommand command = new SqlCommand("Usp_UpdateProfile", con);
+                    command.CommandType = CommandType.StoredProcedure;
+                    //register
+                    command.Parameters.Add("@Userid", SqlDbType.Int);
+                    command.Parameters.Add("@UserName", SqlDbType.VarChar);
+                    command.Parameters.Add("@Email", SqlDbType.VarChar);
+                    command.Parameters.Add("@PhoneNo", SqlDbType.VarChar);
+                    command.Parameters.Add("@PrimaryAddress", SqlDbType.VarChar);
+
+                    //substitute value
+                    command.Parameters["@Userid"].Value = request.Obj.Userid;
+                    command.Parameters["@UserName"].Value = request.Obj.UserName;
+                    command.Parameters["@Email"].Value = request.Obj.Email;
+                    command.Parameters["@PhoneNo"].Value = request.Obj.PhoneNo;
+                    command.Parameters["@PrimaryAddress"].Value = request.Obj.PrimaryAddress;
+
+
+                    //con.Open();
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = command;
+
+                    da.Fill(ds);
+                    response.Status = true;
+                    response.ErrMsg = "Updated successfully";
+
+                }
+                catch (Exception ex)
+                {
+                    response.Status = false;
+                    response.ErrMsg = ex.Message;
+                }
+                finally
+                {
+                    if (con.State == ConnectionState.Open)
+                    {
+                        con.Close();
+                    }
+                }
+                return response;
+            }
+
+
+        }
+        public Response<UserDto> ChangeDeliveryAddress(Request<UserDto> request)
+        {
+
+            DataSet ds = new DataSet("ChangeDeliveryAddress");
+            using (SqlConnection con = new SqlConnection(connection))
+            {
+                try
+                {
+                    //create parameterized query
+                    SqlCommand command = new SqlCommand("Usp_UpdateDeliveryAddress", con);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    //register
+                    command.Parameters.Add("@Userid", SqlDbType.Int);
+                    command.Parameters.Add("@DeliveryAddress", SqlDbType.VarChar);
+
+                    //substitute value
+                    command.Parameters["@Userid"].Value = request.Obj.Userid;
+                    command.Parameters["@DeliveryAddress"].Value = request.Obj.DeliveryAddress;
+
+                    //con.Open();
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = command;
+
+                    da.Fill(ds);
+                    response.Status = true;
+                    response.ErrMsg = "Updated successfully";
+
+                }
+                catch (Exception ex)
+                {
+                    response.Status = false;
+                    response.ErrMsg = ex.Message;
+                }
+                finally
+                {
+                    if (con.State == ConnectionState.Open)
+                    {
+                        con.Close();
+                    }
+                }
+                return response;
+            }
+
+
+
         }
     }
 }

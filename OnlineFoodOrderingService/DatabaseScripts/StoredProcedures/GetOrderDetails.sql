@@ -11,7 +11,7 @@ SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
 		   OLI. Price,
 		   it.ItemHeader
 	FROM Orders o
-	inner join OrderLineItem OLI
+	INNER JOIN OrderLineItem OLI
 	on o.OrderId=OLI.OrderId
 	INNER JOIN Items it
 	on OLI.Itemid=it.Itemid

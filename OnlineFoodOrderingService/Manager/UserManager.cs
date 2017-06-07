@@ -42,10 +42,30 @@ namespace OnlineFoodOrderingService.Manager
             response = repository.GetLogInDetails(request);
             return response;
         }
+        
+        #endregion
+
+        #region 
+        public Response<UserDto> UpdateProfile(Request<UserDto> request)
+        {
+           response= repository.UpdateProfile(request);
+            return response;
+        }
 
         #endregion
+       
+        #region 
+        public Response<UserDto> ChangeDeliveryAddress(Request<UserDto> request)
+        {
+            response = repository.ChangeDeliveryAddress(request);
+            return response;
+        }
+
+        #endregion
+
+
         // private methods
-     
+
         #region 
         private Response<UserDto> ValidateUser(Request<UserDto> request)
         {
