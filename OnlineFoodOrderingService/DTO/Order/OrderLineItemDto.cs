@@ -15,7 +15,8 @@ namespace OnlineFoodOrderingService.DTO.Order
         public int Price { get; set; }
         public short PriceType { get; set; }
         public int ItemId { get; set; }
+		public string ImageUrl { get; set; }
 
-        public ItemDto item {get;set;}
+		public ItemDto item {get;set;}
     }
 }

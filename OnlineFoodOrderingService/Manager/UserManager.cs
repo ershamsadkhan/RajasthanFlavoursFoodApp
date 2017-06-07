@@ -9,62 +9,68 @@ using System.Linq;
 
 namespace OnlineFoodOrderingService.Manager
 {
-    public class UserManager
-    {
-        Response<UserDto> response;
-        IUserRepository repository;
-   
-
-        public UserManager(IUserRepository repository)
-        {
-            this.repository = repository;
-            response = new Response<UserDto>();
-        }
+	public class UserManager
+	{
+		Response<UserDto> response;
+		IUserRepository repository;
 
 
-        //public methods
-        #region 
-        public Response<UserDto> SignUp(Request<UserDto> request)
-        {
-            response = ValidateUser(request);
-            if (response.Status == true)
-            {
-                response = repository.SignUp(request);
-            }
-            return response;
-        }
+		public UserManager(IUserRepository repository)
+		{
+			this.repository = repository;
+			response = new Response<UserDto>();
+		}
 
-        #endregion
 
-        #region 
-        public Response<UserDto> LogIn(Request<UserDto> request)
-        {
-            response = repository.GetLogInDetails(request);
-            return response;
-        }
+		//public methods
+		#region 
+		public Response<UserDto> SignUp(Request<UserDto> request)
+		{
+			response = ValidateUser(request);
+			if (response.Status == true)
+			{
+				response = repository.SignUp(request);
+			}
+			return response;
+		}
 
-        #endregion
-        // private methods
-     
-        #region 
-        private Response<UserDto> ValidateUser(Request<UserDto> request)
-        {
-            response = repository.GetUserDetails(request);
-            if (response.Status == true)
-            {
-                response.Status = false;
-                response.ErrMsg = "User already exists";
-                
-            }
-            else
-            {
-                response.Status = true;
-                response.ErrMsg = "";
-            }
-            return response;
-            
-        }
-        #endregion
+		public Response<UserDto> GetDetails(string UserId)
+		{
+			response = repository.GetUserDetails(UserId);
+			return response;
+		}
 
-    }
+		#endregion
+
+		#region 
+		public Response<UserDto> LogIn(Request<UserDto> request)
+		{
+			response = repository.GetLogInDetails(request);
+			return response;
+		}
+
+		#endregion
+		// private methods
+
+		#region 
+		private Response<UserDto> ValidateUser(Request<UserDto> request)
+		{
+			response = repository.GetUserDetailsFromUserName(request);
+			if (response.Status == true)
+			{
+				response.Status = false;
+				response.ErrMsg = "Invalid UserName And Password.";
+
+			}
+			else
+			{
+				response.Status = true;
+				response.ErrMsg = "";
+			}
+			return response;
+
+		}
+		#endregion
+
+	}
 }

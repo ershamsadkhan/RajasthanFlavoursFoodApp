@@ -78,20 +78,19 @@ namespace OnlineFoodOrderingService.SQLRepository
             return response;
         }
 
-        public Response<UserDto> GetUserDetails(Request<UserDto> request)
+        public Response<UserDto> GetUserDetails(string UserId)
         {
             
             IList<UserDto> UserList = new List<UserDto>();
             DataSet ds = new DataSet("UserDetails");
             SqlConnection con = new SqlConnection(connection);
 
-            SqlCommand command = new SqlCommand("select UserName,PrimaryAddress from dbo.Users where UserName=@UserName", con);
+            SqlCommand command = new SqlCommand("select UserName,PrimaryAddress,UserPhoneNumber,UserEmailAddress from dbo.Users where Userid=@Userid", con);
             try
             {
-                command.Parameters.Add("@UserName", SqlDbType.VarChar);
-                command.Parameters["@UserName"].Value = request.Obj.UserName;
+                command.Parameters.Add("@Userid", SqlDbType.VarChar);
+                command.Parameters["@Userid"].Value = UserId;
               
-
                 SqlDataAdapter da = new SqlDataAdapter();
                 da.SelectCommand = command;
 
@@ -102,8 +101,10 @@ namespace OnlineFoodOrderingService.SQLRepository
                     UserList.Add(new UserDto
                     {
                         UserName = ds.Tables[0].Rows[i]["UserName"].ToString(),
-                        PrimaryAddress = ds.Tables[0].Rows[i]["PrimaryAddress"].ToString()
-                    });
+                        PrimaryAddress = ds.Tables[0].Rows[i]["PrimaryAddress"].ToString(),
+						UserPhoneNumber = ds.Tables[0].Rows[i]["UserPhoneNumber"].ToString(),
+						UserEmailAddress = ds.Tables[0].Rows[i]["UserEmailAddress"].ToString()
+					});
 
                 }
                 if (UserList.Count > 0)
@@ -133,7 +134,63 @@ namespace OnlineFoodOrderingService.SQLRepository
             }
             return response;
         }
-        public Response<UserDto> GetLogInDetails(Request<UserDto> request)
+
+		public Response<UserDto> GetUserDetailsFromUserName(Request<UserDto> request)
+		{
+
+			IList<UserDto> UserList = new List<UserDto>();
+			DataSet ds = new DataSet("UserDetails");
+			SqlConnection con = new SqlConnection(connection);
+
+			SqlCommand command = new SqlCommand("select UserName,PrimaryAddress from dbo.Users where UserName=@UserName", con);
+			try
+			{
+				command.Parameters.Add("@UserName", SqlDbType.VarChar);
+				command.Parameters["@UserName"].Value = request.Obj.UserName;
+
+				SqlDataAdapter da = new SqlDataAdapter();
+				da.SelectCommand = command;
+
+				da.Fill(ds);
+
+				for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+				{
+					UserList.Add(new UserDto
+					{
+						UserName = ds.Tables[0].Rows[i]["UserName"].ToString(),
+						PrimaryAddress = ds.Tables[0].Rows[i]["PrimaryAddress"].ToString()
+					});
+
+				}
+				if (UserList.Count > 0)
+				{
+					response.Status = true;
+					response.ErrMsg = "";
+					response.ObjList = UserList;
+				}
+				else
+				{
+					response.Status = false;
+					response.ErrMsg = "User does not exist";
+				}
+
+			}
+			catch (Exception ex)
+			{
+				response.Status = false;
+				response.ErrMsg = ex.Message;
+			}
+			finally
+			{
+				if (con.State == ConnectionState.Open)
+				{
+					con.Close();
+				}
+			}
+			return response;
+		}
+
+		public Response<UserDto> GetLogInDetails(Request<UserDto> request)
         {
 
             IList<UserDto> UserList = new List<UserDto>();
@@ -177,7 +234,7 @@ namespace OnlineFoodOrderingService.SQLRepository
                 else
                 {
                     response.Status = false;
-                    response.ErrMsg = "User does not exist";
+                    response.ErrMsg = "Invalid Username And Password.";
                 }
 
             }
