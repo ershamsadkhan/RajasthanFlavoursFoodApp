@@ -14,6 +14,8 @@ namespace OnlineFoodOrderingService.DTO.User
         public string PhoneNo { get; set; }
         public string DeliveryAddress { get; set; }
         public string PrimaryAddress { get; set; }
-        public bool IsAdmin { get; set; }
+		public string UserPhoneNumber { get; set; }
+		public string UserEmailAddress { get; set; }
+		public bool IsAdmin { get; set; }
     }
 }

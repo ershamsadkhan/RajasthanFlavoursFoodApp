@@ -8,11 +8,13 @@ END
 GO
 --EXEC Usp_UserSignUp 1,'Shamsad','Shamsad','Kndivali',1
 CREATE PROCEDURE Usp_UserSignUp
-@Userid			NUMERIC(5)	=0,
-@UserName		VARCHAR(50)	  ,
-@UserPwd		VARCHAR(50)   ,
-@PrimaryAddress VARCHAR(200)  ,
-@IsAdmin		BIT	        =0
+@Userid			  NUMERIC(5)	=0,
+@UserName		  VARCHAR(50)	  ,
+@UserPwd		  VARCHAR(50)     ,
+@PrimaryAddress   VARCHAR(200)    ,
+@UserPhoneNumber  VARCHAR(200)    ,
+@UserEmailAddress VARCHAR(200)    ,
+@IsAdmin		  BIT	        =0
 As
 BEGIN
 
@@ -28,14 +30,20 @@ BEGIN TRY
 		UserName,
 		UserPwd,
 		PrimaryAddress,
-		IsAdmin
+		UserPhoneNumber,
+		UserEmailAddress,
+		IsAdmin,
+		RegisterDate
 	)
 	Values
 	(
 		@UserName,
 		@UserPwd,
 		@PrimaryAddress,
-		@IsAdmin
+		@UserPhoneNumber,
+		@UserEmailAddress,
+		@IsAdmin,
+		GETDATE()
 	)
 
 	SELECT @Status=1,@ErrMsg='SuccessFull'

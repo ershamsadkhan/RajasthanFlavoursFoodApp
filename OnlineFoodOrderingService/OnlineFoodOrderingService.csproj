@@ -213,6 +213,8 @@
     <Content Include="DatabaseScripts\StoredProcedures\Usp_UpdateOrderStatus.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\Usp_UserSignUp.sql" />
     <Content Include="DatabaseScripts\Table\Category.sql" />
+    <Content Include="DatabaseScripts\Table\Offers.sql" />
+    <Content Include="DatabaseScripts\Table\Orders.sql" />
     <Content Include="DatabaseScripts\Table\Users.sql" />
     <Content Include="Global.asax" />
     <Content Include="scripts\ai.0.15.0-build58334.js" />
@@ -240,6 +242,7 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Authorization\AuthorizeUsers.cs" />
+    <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -322,7 +325,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49601</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49601/</IISUrl>
+          <IISUrl>http://192.168.0.100:49601/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
