@@ -252,5 +252,60 @@ namespace OnlineFoodOrderingService.SQLRepository
             }
             return response;
         }
-    }
+
+		public Response<UserDto> UpdateProfile(Request<UserDto> request)
+		{
+
+
+
+			DataSet ds = new DataSet("UpdateResponse");
+			using (SqlConnection con = new SqlConnection(connection))
+			{
+				try
+				{
+					//create parameterized query
+					SqlCommand command = new SqlCommand("Usp_UpdateProfile", con);
+					command.CommandType = CommandType.StoredProcedure;
+					//register
+					command.Parameters.Add("@Userid", SqlDbType.Int);
+					command.Parameters.Add("@UserName", SqlDbType.VarChar);
+					command.Parameters.Add("@Email", SqlDbType.VarChar);
+					command.Parameters.Add("@PhoneNo", SqlDbType.VarChar);
+					command.Parameters.Add("@PrimaryAddress", SqlDbType.VarChar);
+
+					//substitute value
+					command.Parameters["@Userid"].Value = request.Obj.Userid;
+					command.Parameters["@UserName"].Value = request.Obj.UserName;
+					command.Parameters["@Email"].Value = request.Obj.UserEmailAddress;
+					command.Parameters["@PhoneNo"].Value = request.Obj.UserPhoneNumber;
+					command.Parameters["@PrimaryAddress"].Value = request.Obj.PrimaryAddress;
+
+
+					//con.Open();
+					SqlDataAdapter da = new SqlDataAdapter();
+					da.SelectCommand = command;
+
+					da.Fill(ds);
+					response.Status = true;
+					response.ErrMsg = "Updated successfully";
+
+				}
+				catch (Exception ex)
+				{
+					response.Status = false;
+					response.ErrMsg = ex.Message;
+				}
+				finally
+				{
+					if (con.State == ConnectionState.Open)
+					{
+						con.Close();
+					}
+				}
+				return response;
+			}
+
+
+		}
+	}
 }

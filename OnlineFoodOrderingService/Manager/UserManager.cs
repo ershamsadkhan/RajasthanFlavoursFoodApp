@@ -49,12 +49,25 @@ namespace OnlineFoodOrderingService.Manager
 			return response;
 		}
 
+		public Response<UserDto> UpdateProfile(Request<UserDto> request)
+		{
+			response = repository.UpdateProfile(request);
+			return response;
+		}
+
 		#endregion
 		// private methods
 
 		#region 
 		private Response<UserDto> ValidateUser(Request<UserDto> request)
 		{
+			if (request.Obj.UserName.Trim() == "" || request.Obj.UserPwd.Trim() == "")
+			{
+				response.Status = false;
+				response.ErrMsg = "User Name Or PassWord Cannot Be Blank.";
+				return response;
+			}
+
 			response = repository.GetUserDetailsFromUserName(request);
 			if (response.Status == true)
 			{

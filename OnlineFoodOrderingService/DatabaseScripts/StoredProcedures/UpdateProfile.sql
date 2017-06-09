@@ -15,9 +15,8 @@ CREATE PROCEDURE Usp_UpdateProfile
 As
 BEGIN
 	Update Users
-	SET UserName=@UserName,
-		Email=@Email,
-		PhoneNo=@PhoneNo,
+	SET UserEmailAddress=@Email,
+		UserPhoneNumber=@PhoneNo,
 		PrimaryAddress=@PrimaryAddress
 		where Userid=@Userid
 END

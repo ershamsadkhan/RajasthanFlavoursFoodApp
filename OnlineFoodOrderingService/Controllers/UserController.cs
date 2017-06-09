@@ -46,5 +46,13 @@ namespace OnlineFoodOrderingService.Controllers
 			response = userManager.GetDetails(UserId);
 			return response;
 		}
+
+		[Route("UpdateDetails")]
+		[HttpPost]
+		public Response<UserDto> UpdateDetails(Request<UserDto> request)
+		{
+			response = userManager.UpdateProfile(request);
+			return response;
+		}
 	}
 }
