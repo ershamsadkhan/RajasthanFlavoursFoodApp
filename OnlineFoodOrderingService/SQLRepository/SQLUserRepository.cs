@@ -8,6 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Globalization;
 
 namespace OnlineFoodOrderingService.SQLRepository
 {
@@ -78,20 +79,19 @@ namespace OnlineFoodOrderingService.SQLRepository
             return response;
         }
 
-        public Response<UserDto> GetUserDetails(Request<UserDto> request)
+        public Response<UserDto> GetUserDetails(string UserId)
         {
-
+            
             IList<UserDto> UserList = new List<UserDto>();
             DataSet ds = new DataSet("UserDetails");
             SqlConnection con = new SqlConnection(connection);
 
-            SqlCommand command = new SqlCommand("select UserName,PrimaryAddress from dbo.Users where UserName=@UserName", con);
+            SqlCommand command = new SqlCommand("select UserName,PrimaryAddress,UserPhoneNumber,UserEmailAddress from Users where Userid=@Userid", con);
             try
             {
-                command.Parameters.Add("@UserName", SqlDbType.VarChar);
-                command.Parameters["@UserName"].Value = request.Obj.UserName;
-
-
+                command.Parameters.Add("@Userid", SqlDbType.VarChar);
+                command.Parameters["@Userid"].Value = UserId;
+              
                 SqlDataAdapter da = new SqlDataAdapter();
                 da.SelectCommand = command;
 
@@ -102,8 +102,10 @@ namespace OnlineFoodOrderingService.SQLRepository
                     UserList.Add(new UserDto
                     {
                         UserName = ds.Tables[0].Rows[i]["UserName"].ToString(),
-                        PrimaryAddress = ds.Tables[0].Rows[i]["PrimaryAddress"].ToString()
-                    });
+                        PrimaryAddress = ds.Tables[0].Rows[i]["PrimaryAddress"].ToString(),
+						UserPhoneNumber = ds.Tables[0].Rows[i]["UserPhoneNumber"].ToString(),
+						UserEmailAddress = ds.Tables[0].Rows[i]["UserEmailAddress"].ToString()
+					});
 
                 }
                 if (UserList.Count > 0)
@@ -117,7 +119,7 @@ namespace OnlineFoodOrderingService.SQLRepository
                     response.Status = false;
                     response.ErrMsg = "User does not exist";
                 }
-
+              
             }
             catch (Exception ex)
             {
@@ -133,14 +135,129 @@ namespace OnlineFoodOrderingService.SQLRepository
             }
             return response;
         }
-        public Response<UserDto> GetLogInDetails(Request<UserDto> request)
+
+		public Response<UserDto> GetUsersList(Request<UserDto> request)
+		{
+
+			IList<UserDto> UserList = new List<UserDto>();
+			DataSet ds = new DataSet("UsersList");
+			SqlConnection con = new SqlConnection(connection);
+			CultureInfo provider = CultureInfo.InvariantCulture;
+
+			SqlCommand command = new SqlCommand("select UserName,PrimaryAddress,UserPhoneNumber,UserEmailAddress,ISNULL(cast(RegisterDate AS date),GETDATE()) AS  RegisterDate from Users where UserName like '%"+request.Obj.UserName +"%'", con);
+			try
+			{
+				//command.Parameters.Add("@Userid", SqlDbType.VarChar);
+				//command.Parameters["@Userid"].Value = UserId;
+
+				SqlDataAdapter da = new SqlDataAdapter();
+				da.SelectCommand = command;
+
+				da.Fill(ds);
+
+				for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+				{
+					UserList.Add(new UserDto
+					{
+						UserName = ds.Tables[0].Rows[i]["UserName"].ToString(),
+						PrimaryAddress = ds.Tables[0].Rows[i]["PrimaryAddress"].ToString(),
+						UserPhoneNumber = ds.Tables[0].Rows[i]["UserPhoneNumber"].ToString(),
+						UserEmailAddress = ds.Tables[0].Rows[i]["UserEmailAddress"].ToString(),
+						RegisterDate = ds.Tables[0].Rows[i]["RegisterDate"].ToString()
+					});
+
+				}
+				if (UserList.Count > 0)
+				{
+					response.Status = true;
+					response.ErrMsg = "";
+					response.ObjList = UserList;
+				}
+				else
+				{
+					response.Status = false;
+					response.ErrMsg = "No records found.";
+				}
+
+			}
+			catch (Exception ex)
+			{
+				response.Status = false;
+				response.ErrMsg = ex.Message;
+			}
+			finally
+			{
+				if (con.State == ConnectionState.Open)
+				{
+					con.Close();
+				}
+			}
+			return response;
+		}
+
+		public Response<UserDto> GetUserDetailsFromUserName(Request<UserDto> request)
+		{
+
+			IList<UserDto> UserList = new List<UserDto>();
+			DataSet ds = new DataSet("UserDetails");
+			SqlConnection con = new SqlConnection(connection);
+
+			SqlCommand command = new SqlCommand("select UserName,PrimaryAddress from Users where UserName=@UserName", con);
+			try
+			{
+				command.Parameters.Add("@UserName", SqlDbType.VarChar);
+				command.Parameters["@UserName"].Value = request.Obj.UserName;
+
+				SqlDataAdapter da = new SqlDataAdapter();
+				da.SelectCommand = command;
+
+				da.Fill(ds);
+
+				for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+				{
+					UserList.Add(new UserDto
+					{
+						UserName = ds.Tables[0].Rows[i]["UserName"].ToString(),
+						PrimaryAddress = ds.Tables[0].Rows[i]["PrimaryAddress"].ToString()
+					});
+
+				}
+				if (UserList.Count > 0)
+				{
+					response.Status = true;
+					response.ErrMsg = "";
+					response.ObjList = UserList;
+				}
+				else
+				{
+					response.Status = false;
+					response.ErrMsg = "User does not exist";
+				}
+
+			}
+			catch (Exception ex)
+			{
+				response.Status = false;
+				response.ErrMsg = ex.Message;
+			}
+			finally
+			{
+				if (con.State == ConnectionState.Open)
+				{
+					con.Close();
+				}
+			}
+			return response;
+		}
+
+		public Response<UserDto> GetLogInDetails(Request<UserDto> request)
         {
 
             IList<UserDto> UserList = new List<UserDto>();
             DataSet ds = new DataSet("LoginDetails");
             SqlConnection con = new SqlConnection(connection);
 
-            SqlCommand command = new SqlCommand("select UserName,PrimaryAddress,UserPwd,Userid,UserPhoneNumber,UserEmailAddress from dbo.Users where UserName=@UserName and UserPwd=@UserPwd", con);
+            SqlCommand command = new SqlCommand("select UserName,PrimaryAddress,UserPwd,Userid,UserPhoneNumber,UserEmailAddress from Users where UserName=@UserName and UserPwd=@UserPwd", con);
             try
             {
                 command.Parameters.Add("@UserName", SqlDbType.VarChar);
@@ -177,7 +294,7 @@ namespace OnlineFoodOrderingService.SQLRepository
                 else
                 {
                     response.Status = false;
-                    response.ErrMsg = "User does not exist";
+                    response.ErrMsg = "Invalid Username And Password.";
                 }
 
             }
@@ -195,106 +312,60 @@ namespace OnlineFoodOrderingService.SQLRepository
             }
             return response;
         }
-        public Response<UserDto> UpdateProfile(Request<UserDto> request)
-        {
+
+		public Response<UserDto> UpdateProfile(Request<UserDto> request)
+		{
 
 
 
-            DataSet ds = new DataSet("UpdateResponse");
-            using (SqlConnection con = new SqlConnection(connection))
-            {
-                try
-                {
-                    //create parameterized query
-                    SqlCommand command = new SqlCommand("Usp_UpdateProfile", con);
-                    command.CommandType = CommandType.StoredProcedure;
-                    //register
-                    command.Parameters.Add("@Userid", SqlDbType.Int);
-                    command.Parameters.Add("@UserName", SqlDbType.VarChar);
-                    command.Parameters.Add("@Email", SqlDbType.VarChar);
-                    command.Parameters.Add("@PhoneNo", SqlDbType.VarChar);
-                    command.Parameters.Add("@PrimaryAddress", SqlDbType.VarChar);
+			DataSet ds = new DataSet("UpdateResponse");
+			using (SqlConnection con = new SqlConnection(connection))
+			{
+				try
+				{
+					//create parameterized query
+					SqlCommand command = new SqlCommand("Usp_UpdateProfile", con);
+					command.CommandType = CommandType.StoredProcedure;
+					//register
+					command.Parameters.Add("@Userid", SqlDbType.Int);
+					command.Parameters.Add("@UserName", SqlDbType.VarChar);
+					command.Parameters.Add("@Email", SqlDbType.VarChar);
+					command.Parameters.Add("@PhoneNo", SqlDbType.VarChar);
+					command.Parameters.Add("@PrimaryAddress", SqlDbType.VarChar);
 
-                    //substitute value
-                    command.Parameters["@Userid"].Value = request.Obj.Userid;
-                    command.Parameters["@UserName"].Value = request.Obj.UserName;
-                    command.Parameters["@Email"].Value = request.Obj.Email;
-                    command.Parameters["@PhoneNo"].Value = request.Obj.PhoneNo;
-                    command.Parameters["@PrimaryAddress"].Value = request.Obj.PrimaryAddress;
-
-
-                    //con.Open();
-                    SqlDataAdapter da = new SqlDataAdapter();
-                    da.SelectCommand = command;
-
-                    da.Fill(ds);
-                    response.Status = true;
-                    response.ErrMsg = "Updated successfully";
-
-                }
-                catch (Exception ex)
-                {
-                    response.Status = false;
-                    response.ErrMsg = ex.Message;
-                }
-                finally
-                {
-                    if (con.State == ConnectionState.Open)
-                    {
-                        con.Close();
-                    }
-                }
-                return response;
-            }
+					//substitute value
+					command.Parameters["@Userid"].Value = request.Obj.Userid;
+					command.Parameters["@UserName"].Value = request.Obj.UserName;
+					command.Parameters["@Email"].Value = request.Obj.UserEmailAddress;
+					command.Parameters["@PhoneNo"].Value = request.Obj.UserPhoneNumber;
+					command.Parameters["@PrimaryAddress"].Value = request.Obj.PrimaryAddress;
 
 
-        }
-        public Response<UserDto> ChangeDeliveryAddress(Request<UserDto> request)
-        {
+					//con.Open();
+					SqlDataAdapter da = new SqlDataAdapter();
+					da.SelectCommand = command;
 
-            DataSet ds = new DataSet("ChangeDeliveryAddress");
-            using (SqlConnection con = new SqlConnection(connection))
-            {
-                try
-                {
-                    //create parameterized query
-                    SqlCommand command = new SqlCommand("Usp_UpdateDeliveryAddress", con);
-                    command.CommandType = CommandType.StoredProcedure;
+					da.Fill(ds);
+					response.Status = true;
+					response.ErrMsg = "Updated successfully";
 
-                    //register
-                    command.Parameters.Add("@Userid", SqlDbType.Int);
-                    command.Parameters.Add("@DeliveryAddress", SqlDbType.VarChar);
-
-                    //substitute value
-                    command.Parameters["@Userid"].Value = request.Obj.Userid;
-                    command.Parameters["@DeliveryAddress"].Value = request.Obj.DeliveryAddress;
-
-                    //con.Open();
-                    SqlDataAdapter da = new SqlDataAdapter();
-                    da.SelectCommand = command;
-
-                    da.Fill(ds);
-                    response.Status = true;
-                    response.ErrMsg = "Updated successfully";
-
-                }
-                catch (Exception ex)
-                {
-                    response.Status = false;
-                    response.ErrMsg = ex.Message;
-                }
-                finally
-                {
-                    if (con.State == ConnectionState.Open)
-                    {
-                        con.Close();
-                    }
-                }
-                return response;
-            }
+				}
+				catch (Exception ex)
+				{
+					response.Status = false;
+					response.ErrMsg = ex.Message;
+				}
+				finally
+				{
+					if (con.State == ConnectionState.Open)
+					{
+						con.Close();
+					}
+				}
+				return response;
+			}
 
 
-
-        }
-    }
+		}
+	}
 }

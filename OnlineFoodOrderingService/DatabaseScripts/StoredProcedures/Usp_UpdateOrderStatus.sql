@@ -35,10 +35,17 @@ BEGIN TRY
 	END
 	ELSE
 	BEGIN
-		UPDATE Orders SET OrderStatus=@OrderStatus 
-		WHERE OrderId=@OrderNo
+		IF(@OrderStatus='O')
+		BEGIN
+			SELECT @Status=0,@ErrMsg='Order is out for delivery and cannot be cancelled.'
+		END
+		ELSE
+		BEGIN
+			UPDATE Orders SET OrderStatus=@OrderStatus 
+			WHERE OrderId=@OrderNo
 
-		SELECT @Status=1,@ErrMsg='SuccessFully updated status'
+			SELECT @Status=1,@ErrMsg='SuccessFully updated status'
+		END
 	END
 	
 	SELECT @Status AS Status,@ErrMsg AS ErrMsg

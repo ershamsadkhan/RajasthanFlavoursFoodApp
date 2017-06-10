@@ -13,7 +13,9 @@ GO
 --go 
 CREATE PROCEDURE Usp_AddOrder
 @lineItemXml			VARCHAR(4000),
-@UserId					NUMERIC(5)
+@UserId					NUMERIC(5),
+@DeliveryAddress		VARCHAR(1000),
+@CityCode				NUMERIC(3)
 As
 BEGIN
 
@@ -51,13 +53,17 @@ BEGIN TRY
 	(
 	Userid,
 	OrderDate,
-	OrderStatus
+	OrderStatus,
+	DeliveryAddress,
+	CityCode	
 	) OUTPUT Inserted.OrderId INTO @tempOrderTable
 	VALUES
 	(
 	@UserId,
 	GETDate(),
-	'P'
+	'P',
+	@DeliveryAddress,
+	@CityCode	
 	)
 
 	SELECT @OrderNo=OrderNo from @tempOrderTable
@@ -67,7 +73,8 @@ BEGIN TRY
 		OrderId,
 		Quantity,
 		PriceType,
-		Price
+		Price,
+		ItemId
 	)
 	SELECT  @OrderNo       AS OrderId,
 			tli.Quantity   AS Quantity,
@@ -76,7 +83,8 @@ BEGIN TRY
 				WHEN 1 THEN it.QuaterPrice
 				WHEN 2 THEN it.HalfPrice
 				WHEN 3 THEN it.FullPrice
-			END            AS Price
+			END            AS Price,
+			tli.ItemId     AS ItemId
 	FROM #tempOrdersLineItem tli
 	INNER JOIN Items it
 	ON it.Itemid=tli.ItemId

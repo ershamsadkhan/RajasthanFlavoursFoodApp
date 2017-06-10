@@ -10,7 +10,8 @@ namespace OnlineFoodOrderingService.Models.Order
         public long OrderNo { get; set; }
         public DateTime OrderDate { get; set; }
         public long GrandTotal { get; set; }
+		public string DeliveryAddress { get; set; }
 
-        public IList<OrderLineItem> OrderLineItemList { get; set; }
+		public IList<OrderLineItem> OrderLineItemList { get; set; }
     }
 }

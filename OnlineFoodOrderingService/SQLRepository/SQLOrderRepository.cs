@@ -39,12 +39,16 @@ namespace OnlineFoodOrderingService.SQLRepository
                     //register
                     command.Parameters.Add("@lineItemXml", SqlDbType.VarChar);
                     command.Parameters.Add("@UserId", SqlDbType.VarChar);
+					command.Parameters.Add("@DeliveryAddress", SqlDbType.VarChar);
+					command.Parameters.Add("@CityCode", SqlDbType.Int);
 
-                    //substitute value
-                    command.Parameters["@lineItemXml"].Value = lineItemXmlString;
+					//substitute value
+					command.Parameters["@lineItemXml"].Value = lineItemXmlString;
                     command.Parameters["@UserId"].Value = request.Obj.UserId;
-                    //con.Open();
-                    SqlDataAdapter da = new SqlDataAdapter();
+					command.Parameters["@DeliveryAddress"].Value = request.Obj.DeliveryAddress;
+					command.Parameters["@CityCode"].Value = request.Obj.CityCode;
+					//con.Open();
+					SqlDataAdapter da = new SqlDataAdapter();
                     da.SelectCommand = command;
 
                     da.Fill(ds);
@@ -138,12 +142,16 @@ namespace OnlineFoodOrderingService.SQLRepository
 
                     for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                     {
-                        Orders.Add(new OrderDto
-                        {
-                            OrderNo = int.Parse(ds.Tables[0].Rows[i]["Orderid"].ToString()),
-                            OrderDate = Convert.ToDateTime(ds.Tables[0].Rows[i]["OrderDate"].ToString()),
-                            GrandTotal = int.Parse(ds.Tables[0].Rows[i]["GrandTotal"].ToString())
-                        });
+						Orders.Add(new OrderDto
+						{
+							OrderNo = int.Parse(ds.Tables[0].Rows[i]["OrderId"].ToString()),
+							OrderDate = Convert.ToDateTime(ds.Tables[0].Rows[i]["OrderDate"].ToString()),
+							GrandTotal = int.Parse(ds.Tables[0].Rows[i]["GrandTotal"].ToString()),
+							UserId = long.Parse(ds.Tables[0].Rows[i]["Userid"].ToString()),
+							DeliveryAddress = ds.Tables[0].Rows[i]["DeliveryAddress"].ToString(),
+							UserName = ds.Tables[0].Rows[i]["UserName"].ToString(),
+							CityCode= int.Parse(ds.Tables[0].Rows[i]["CityCode"].ToString())
+						});
                     }
                     if (Orders.Count == 0)
                     {
@@ -204,18 +212,28 @@ namespace OnlineFoodOrderingService.SQLRepository
                          ItemHeader =ds.Tables[0].Rows[i]["ItemHeader"].ToString(),
                          Quantity = int.Parse(ds.Tables[0].Rows[i]["Quantity"].ToString()),
                          PriceType=Convert.ToInt16(ds.Tables[0].Rows[i]["PriceType"].ToString()),
-                         Price=int.Parse(ds.Tables[0].Rows[i]["Price"].ToString())
-                        });
+                         Price=int.Parse(ds.Tables[0].Rows[i]["Price"].ToString()),
+						 ImageUrl= ds.Tables[0].Rows[i]["ImageUrl"].ToString(),
+						});
                     }
                     if (Items.Count == 0)
                     {
 
                         response.ErrMsg = "No Records Found";
-                    }
+						response.Status = false;
+
+					}
                     else
                     {
-                        response.Obj.OrderLineItemList=Items;
-                    }
+						response.Obj = new OrderDto()
+						{
+							OrderLineItemList = Items
+						};
+
+						response.Status = true;
+						response.ErrMsg = "";
+
+					}
 
                 }
                 catch (Exception ex)

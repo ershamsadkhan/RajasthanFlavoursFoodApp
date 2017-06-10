@@ -44,7 +44,16 @@ namespace OnlineFoodOrderingService.Controllers
             return response;
         }
 
-        [AuthorizeUser]
+		[AuthorizeUser]
+		[Route("OrderOutForDelivery")]
+		[HttpPost]
+		public Response<OrderDto> OrderOutForDelivery(Request<OrderDto> request)
+		{
+			response = orderManager.UpdateOrderStatus(request, OrderStatus.OutForDelivery);
+			return response;
+		}
+
+		[AuthorizeUser]
         [Route("CancelOrder")]
         [HttpPost]
         public Response<OrderDto> OrderCancelled(Request<OrderDto> request)
@@ -65,7 +74,8 @@ namespace OnlineFoodOrderingService.Controllers
         [HttpPost]
         public Response<OrderDto> GetOrderDetails(Request<OrderDto> request)
         {
-            return response;
+			response = orderManager.GetOrderDetails(request);
+			return response;
         }
     }
 }
