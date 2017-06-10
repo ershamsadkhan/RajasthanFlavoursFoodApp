@@ -125,7 +125,70 @@ namespace OnlineFoodOrderingService.SQLRepository
             return response;
         }
 
-        public Response<CategoryDto> AddItems(Request<CategoryDto> request)
+		public Response<CategoryDto> GetCategory(Request<CategoryDto> request)
+		{
+			DataSet ds = new DataSet("CategoryListResponse");
+			using (SqlConnection con = new SqlConnection(connection))
+			{
+				try
+				{
+					//create parameterized query
+					SqlCommand command = new SqlCommand("Usp_GetCategoryList", con);
+					command.CommandType = CommandType.StoredProcedure;
+					//register
+					command.Parameters.Add("@Categoryid", SqlDbType.Int);
+
+					//substitute value
+					command.Parameters["@Categoryid"].Value = request.Obj.Categoryid;
+
+					//con.Open();
+					SqlDataAdapter da = new SqlDataAdapter();
+					da.SelectCommand = command;
+
+					da.Fill(ds);
+					IList<CategoryDto> categoryDtoList = new List<CategoryDto>();
+
+					foreach (DataRow items in ds.Tables[0].Rows)
+					{
+						categoryDtoList.Add(new CategoryDto()
+						{
+							Categoryid= Convert.ToInt64(items["Categoryid"]),
+							CategoryHeader= items["CategoryHeader"].ToString(),
+							CategoryDescription= items["CategoryDescription"].ToString()
+
+						});
+					}
+
+					if (categoryDtoList.Count() > 0)
+					{
+						response.ObjList = categoryDtoList;
+						response.Status = true;
+						response.ErrMsg = "";
+					}
+					else
+					{
+						response.Status = false;
+						response.ErrMsg = "No record found";
+					}
+
+				}
+				catch (Exception ex)
+				{
+					response.Status = false;
+					response.ErrMsg = ex.Message;
+				}
+				finally
+				{
+					if (con.State == ConnectionState.Open)
+					{
+						con.Close();
+					}
+				}
+			}
+			return response;
+		}
+
+		public Response<CategoryDto> AddItems(Request<CategoryDto> request)
         {
             DataSet ds = new DataSet("ItemAddResponse");
             using (SqlConnection con = new SqlConnection(connection))

@@ -11,7 +11,8 @@ namespace OnlineFoodOrderingService.IRepository
     public interface IItemRepository
     {
         Response<CategoryDto> GetItems(Request<CategoryDto> request);
-        Response<CategoryDto> AddCategory(Request<CategoryDto> request);
+		Response<CategoryDto> GetCategory(Request<CategoryDto> request);
+		Response<CategoryDto> AddCategory(Request<CategoryDto> request);
         Response<CategoryDto> AddItems(Request<CategoryDto> request);
     }
 }

@@ -34,7 +34,15 @@ namespace OnlineFoodOrderingService.Controllers
             return response;
         }
 
-        [Route("AddItems")]
+		[Route("GetCategory")]
+		[HttpPost]
+		public Response<CategoryDto> GetCategory(Request<CategoryDto> request)
+		{
+			response = itemManager.GetCategory(request);
+			return response;
+		}
+
+		[Route("AddItems")]
         [HttpPost]
         public Response<CategoryDto> AddItems(Request<CategoryDto> request)
         {
