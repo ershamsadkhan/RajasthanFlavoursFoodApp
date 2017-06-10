@@ -196,7 +196,9 @@
     <Content Include="DatabaseScripts\DDL\User.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\GetOrderDetails.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\GetOrders.sql" />
+    <Content Include="DatabaseScripts\StoredProcedures\UpdateCategory.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\UpdateDeliveryAddress.sql" />
+    <Content Include="DatabaseScripts\StoredProcedures\UpdateItem.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\UpdateProfile.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\Usp_AddCategory.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\Usp_AddItem.sql" />
