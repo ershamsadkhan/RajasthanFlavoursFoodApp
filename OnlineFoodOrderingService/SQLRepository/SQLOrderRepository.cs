@@ -149,6 +149,7 @@ namespace OnlineFoodOrderingService.SQLRepository
 							GrandTotal = int.Parse(ds.Tables[0].Rows[i]["GrandTotal"].ToString()),
 							UserId = long.Parse(ds.Tables[0].Rows[i]["Userid"].ToString()),
 							DeliveryAddress = ds.Tables[0].Rows[i]["DeliveryAddress"].ToString(),
+							UserName = ds.Tables[0].Rows[i]["UserName"].ToString(),
 							CityCode= int.Parse(ds.Tables[0].Rows[i]["CityCode"].ToString())
 						});
                     }

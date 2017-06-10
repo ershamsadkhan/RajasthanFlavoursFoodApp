@@ -8,6 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Globalization;
 
 namespace OnlineFoodOrderingService.SQLRepository
 {
@@ -85,7 +86,7 @@ namespace OnlineFoodOrderingService.SQLRepository
             DataSet ds = new DataSet("UserDetails");
             SqlConnection con = new SqlConnection(connection);
 
-            SqlCommand command = new SqlCommand("select UserName,PrimaryAddress,UserPhoneNumber,UserEmailAddress from dbo.Users where Userid=@Userid", con);
+            SqlCommand command = new SqlCommand("select UserName,PrimaryAddress,UserPhoneNumber,UserEmailAddress from Users where Userid=@Userid", con);
             try
             {
                 command.Parameters.Add("@Userid", SqlDbType.VarChar);
@@ -135,6 +136,65 @@ namespace OnlineFoodOrderingService.SQLRepository
             return response;
         }
 
+		public Response<UserDto> GetUsersList(Request<UserDto> request)
+		{
+
+			IList<UserDto> UserList = new List<UserDto>();
+			DataSet ds = new DataSet("UsersList");
+			SqlConnection con = new SqlConnection(connection);
+			CultureInfo provider = CultureInfo.InvariantCulture;
+
+			SqlCommand command = new SqlCommand("select UserName,PrimaryAddress,UserPhoneNumber,UserEmailAddress,ISNULL(cast(RegisterDate AS date),GETDATE()) AS  RegisterDate from Users where UserName like '%"+request.Obj.UserName +"%'", con);
+			try
+			{
+				//command.Parameters.Add("@Userid", SqlDbType.VarChar);
+				//command.Parameters["@Userid"].Value = UserId;
+
+				SqlDataAdapter da = new SqlDataAdapter();
+				da.SelectCommand = command;
+
+				da.Fill(ds);
+
+				for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+				{
+					UserList.Add(new UserDto
+					{
+						UserName = ds.Tables[0].Rows[i]["UserName"].ToString(),
+						PrimaryAddress = ds.Tables[0].Rows[i]["PrimaryAddress"].ToString(),
+						UserPhoneNumber = ds.Tables[0].Rows[i]["UserPhoneNumber"].ToString(),
+						UserEmailAddress = ds.Tables[0].Rows[i]["UserEmailAddress"].ToString(),
+						RegisterDate = ds.Tables[0].Rows[i]["RegisterDate"].ToString()
+					});
+
+				}
+				if (UserList.Count > 0)
+				{
+					response.Status = true;
+					response.ErrMsg = "";
+					response.ObjList = UserList;
+				}
+				else
+				{
+					response.Status = false;
+					response.ErrMsg = "No records found.";
+				}
+
+			}
+			catch (Exception ex)
+			{
+				response.Status = false;
+				response.ErrMsg = ex.Message;
+			}
+			finally
+			{
+				if (con.State == ConnectionState.Open)
+				{
+					con.Close();
+				}
+			}
+			return response;
+		}
+
 		public Response<UserDto> GetUserDetailsFromUserName(Request<UserDto> request)
 		{
 
@@ -142,7 +202,7 @@ namespace OnlineFoodOrderingService.SQLRepository
 			DataSet ds = new DataSet("UserDetails");
 			SqlConnection con = new SqlConnection(connection);
 
-			SqlCommand command = new SqlCommand("select UserName,PrimaryAddress from dbo.Users where UserName=@UserName", con);
+			SqlCommand command = new SqlCommand("select UserName,PrimaryAddress from Users where UserName=@UserName", con);
 			try
 			{
 				command.Parameters.Add("@UserName", SqlDbType.VarChar);
@@ -197,7 +257,7 @@ namespace OnlineFoodOrderingService.SQLRepository
             DataSet ds = new DataSet("LoginDetails");
             SqlConnection con = new SqlConnection(connection);
 
-            SqlCommand command = new SqlCommand("select UserName,PrimaryAddress,UserPwd,Userid,UserPhoneNumber,UserEmailAddress from dbo.Users where UserName=@UserName and UserPwd=@UserPwd", con);
+            SqlCommand command = new SqlCommand("select UserName,PrimaryAddress,UserPwd,Userid,UserPhoneNumber,UserEmailAddress from Users where UserName=@UserName and UserPwd=@UserPwd", con);
             try
             {
                 command.Parameters.Add("@UserName", SqlDbType.VarChar);

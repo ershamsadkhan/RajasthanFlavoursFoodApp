@@ -14,5 +14,7 @@ namespace OnlineFoodOrderingService.DTO.User
 		public string UserPhoneNumber { get; set; }
 		public string UserEmailAddress { get; set; }
 		public bool IsAdmin { get; set; }
-    }
+		public String RegisterDate { get; set; }
+
+	}
 }

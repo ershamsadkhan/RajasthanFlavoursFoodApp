@@ -11,6 +11,7 @@ namespace OnlineFoodOrderingService.DTO.Order
 		public DateTime OrderDate { get; set; }
 		public long GrandTotal { get; set; }
 		public long UserId { get; set; }
+		public String UserName { get; set; }
 		public string DeliveryAddress { get; set; }
 		public int CityCode { get; set; }
 

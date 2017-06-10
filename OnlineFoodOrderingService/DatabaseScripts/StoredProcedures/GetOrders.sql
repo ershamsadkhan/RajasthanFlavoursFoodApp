@@ -12,6 +12,7 @@ SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
 		SELECT o.OrderId,
 			   o.OrderDate,
 			   U.Userid,
+			   U.UserName,
 			   o.OrderStatus,
 			   o.DeliveryAddress,
 			   o.CityCode,
@@ -20,7 +21,7 @@ SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
 		INNER JOIN Users U
 		ON o.Userid=U.Userid
 		INNER JOIN (
-			SELECT SUM (OLI. Price) AS GrandTotal,OLI.OrderId AS OrderId
+			SELECT SUM (OLI. Price*OLI.Quantity) AS GrandTotal,OLI.OrderId AS OrderId
 			FROM Orders o
 			inner join OrderLineItem OLI
 			on o.OrderId=OLI.OrderId
@@ -36,6 +37,7 @@ ELSE
 		SELECT o.OrderId,
 			   o.OrderDate,
 			   U.Userid,
+			   U.UserName,
 			   o.OrderStatus,
 			   o.DeliveryAddress,
 			   o.CityCode,
