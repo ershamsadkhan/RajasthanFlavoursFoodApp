@@ -17,6 +17,7 @@ namespace OnlineFoodOrderingService.Controllers
     {
         ItemManager itemManager;
         Response<CategoryDto> response;
+        Response<ItemDto> ItemResponse;
 
         #region public methods
         public ItemController(IItemRepository repository)
@@ -50,6 +51,20 @@ namespace OnlineFoodOrderingService.Controllers
             return response;
         }
 
+        [Route("UpdateItem")]
+        [HttpPost]
+        public Response<ItemDto> UpdateItem(Request<ItemDto> request)
+        {
+            ItemResponse = itemManager.UpdateItem(request);
+            return ItemResponse;
+        }
+        [Route("UpdateCategory")]
+        [HttpPost]
+        public Response<CategoryDto> UpdateCategory(Request<CategoryDto> request)
+        {
+            response = itemManager.UpdateCategory(request);
+            return response;
+        }
         [AuthorizeUser]
         [Route("AddCategory")]
         [HttpPost]

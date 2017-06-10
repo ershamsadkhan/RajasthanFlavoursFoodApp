@@ -15,10 +15,12 @@ namespace OnlineFoodOrderingService.SQLRepository
     {
         string connection;
         Response<CategoryDto> response;
+        Response<ItemDto> itemResponse;
 
         public SQLItemRepository()
         {
             response = new Response<CategoryDto>();
+            itemResponse = new Response<ItemDto>();
             connection = Settings.ConnectionString;
         }
 
@@ -285,5 +287,115 @@ namespace OnlineFoodOrderingService.SQLRepository
             }
             return response;
         }
+
+        public Response<ItemDto> UpdateItem(Request<ItemDto> request)
+        {
+
+
+
+            DataSet ds = new DataSet("UpdateItem");
+            using (SqlConnection con = new SqlConnection(connection))
+            {
+                try
+                {
+                    //create parameterized query
+                    SqlCommand command = new SqlCommand("Usp_UpdateItem", con);
+                    command.CommandType = CommandType.StoredProcedure;
+                    //register
+                    command.Parameters.Add("@Itemid", SqlDbType.Int);
+                    command.Parameters.Add("@Categoryid", SqlDbType.Int);
+                    command.Parameters.Add("@ItemHeader", SqlDbType.VarChar);
+                    command.Parameters.Add("@ItemDescription", SqlDbType.VarChar);
+                    command.Parameters.Add("@QuaterPrice", SqlDbType.Int);
+                    command.Parameters.Add("@HalfPrice", SqlDbType.Int);
+                    command.Parameters.Add("@FullPrice", SqlDbType.Int);
+                    command.Parameters.Add("@ImageUrl", SqlDbType.VarChar);
+                    command.Parameters.Add("@IsActive", SqlDbType.Bit);
+
+
+
+                    //substitute value
+                    command.Parameters["@Itemid"].Value = request.Obj.Itemid;
+                    command.Parameters["@Categoryid"].Value = request.Obj.Categoryid;
+                    command.Parameters["@ItemHeader"].Value = request.Obj.ItemHeader;
+                    command.Parameters["@ItemDescription"].Value = request.Obj.ItemDescription;
+                    command.Parameters["@QuaterPrice"].Value = request.Obj.QuaterPrice;
+                    command.Parameters["@HalfPrice"].Value = request.Obj.HalfPrice;
+                    command.Parameters["@FullPrice"].Value = request.Obj.FullPrice;
+                    command.Parameters["@ImageUrl"].Value = request.Obj.ImageUrl;
+                    command.Parameters["@IsActive"].Value = request.Obj.IsActive;
+
+
+                    //con.Open();
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = command;
+
+                    da.Fill(ds);
+                    itemResponse.Status = true;
+                    itemResponse.ErrMsg = "Updated successfully";
+
+                }
+                catch (Exception ex)
+                {
+                    itemResponse.Status = false;
+                    itemResponse.ErrMsg = ex.Message;
+                }
+                finally
+                {
+                    if (con.State == ConnectionState.Open)
+                    {
+                        con.Close();
+                    }
+                }
+                return itemResponse;
+            }
+
+
+        }
+        public Response<CategoryDto> UpdateCategory(Request<CategoryDto> request)
+        {
+            DataSet ds = new DataSet("CategoryAddResponse");
+            using (SqlConnection con = new SqlConnection(connection))
+            {
+                try
+                {
+                    //create parameterized query
+                    SqlCommand command = new SqlCommand("Usp_UpdateCategory", con);
+                    command.CommandType = CommandType.StoredProcedure;
+                    //register
+                    command.Parameters.Add("@Categoryid", SqlDbType.Int);
+                    command.Parameters.Add("@CategoryHeader", SqlDbType.VarChar);
+                    command.Parameters.Add("@CategoryDescription", SqlDbType.VarChar);
+
+                    //substitute value
+                    command.Parameters["@Categoryid"].Value = request.Obj.Categoryid;
+                    command.Parameters["@CategoryHeader"].Value = request.Obj.CategoryHeader;
+                    command.Parameters["@CategoryDescription"].Value = request.Obj.CategoryDescription;
+
+                    //con.Open();
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = command;
+
+                    da.Fill(ds);
+                    itemResponse.Status = true;
+                    itemResponse.ErrMsg = "Updated successfully";
+
+                }
+                catch (Exception ex)
+                {
+                    response.Status = false;
+                    response.ErrMsg = ex.Message;
+                }
+                finally
+                {
+                    if (con.State == ConnectionState.Open)
+                    {
+                        con.Close();
+                    }
+                }
+            }
+            return response;
+        }
+
     }
 }

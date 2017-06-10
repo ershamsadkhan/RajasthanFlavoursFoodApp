@@ -12,6 +12,7 @@ namespace OnlineFoodOrderingService.Manager
 	{
 		Response<CategoryDto> response;
 		IItemRepository repository;
+        Response<ItemDto> ItemResponse;
 
 		public ItemManager(IItemRepository repository)
 		{
@@ -57,16 +58,44 @@ namespace OnlineFoodOrderingService.Manager
 			}
 			return response;
 		}
+        public Response<CategoryDto> UpdateCategory(Request<CategoryDto> request)
+        {
+            response = ValidateCategory(request);
+            if (response.Status == true)
+            {
+                response = repository.UpdateCategory(request);
+            }
+            return response;
+        }
+        public Response<ItemDto> UpdateItem(Request<ItemDto> request)
+        {
+            ItemResponse = ValidateItem(request);
+            if (response.Status == true)
+            {
+                ItemResponse = repository.UpdateItem(request);
+            }
+            return ItemResponse;
+        }
 
-		#endregion
-
-		#region private methods
-		private Response<CategoryDto> ValidateItem(Request<CategoryDto> request)
+        #endregion
+       
+        #region private methods
+        private Response<ItemDto> ValidateItem(Request<ItemDto> request)
 		{
 			response.Status = true;
-			return response;
+			return ItemResponse;
 		}
-		#endregion
+        private Response<CategoryDto> ValidateItem(Request<CategoryDto> request)
+        {
+            response.Status = true;
+            return response;
+        }
+        private Response<CategoryDto> ValidateCategory(Request<CategoryDto> request)
+        {
+            response.Status = true;
+            return response;
+        }
+        #endregion
 
-	}
+    }
 }

@@ -16,5 +16,6 @@ namespace OnlineFoodOrderingService.DTO.Item
         public long HalfPrice { get; set; }
         public long FullPrice { get; set; }
         public string ImageUrl { get; set; }
+        public bool IsActive { get; set; }
     }
 }
