@@ -14,5 +14,7 @@ namespace OnlineFoodOrderingService.IRepository
 		Response<CategoryDto> GetCategory(Request<CategoryDto> request);
 		Response<CategoryDto> AddCategory(Request<CategoryDto> request);
         Response<CategoryDto> AddItems(Request<CategoryDto> request);
+        Response<ItemDto> UpdateItem(Request<ItemDto> request);
+        Response<CategoryDto> UpdateCategory(Request<CategoryDto> request);
     }
 }
