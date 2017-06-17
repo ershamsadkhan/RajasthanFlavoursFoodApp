@@ -7,10 +7,12 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace OnlineFoodOrderingService.Controllers
 {
-    public class ImageController : ApiController
+	[EnableCors(origins: "*", headers: "*", methods: "*")]
+	public class ImageController : ApiController
     {
 		[HttpGet]
 		public HttpResponseMessage GetImage(String ImageName)
