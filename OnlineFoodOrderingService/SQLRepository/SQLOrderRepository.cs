@@ -129,13 +129,15 @@ namespace OnlineFoodOrderingService.SQLRepository
                     command.Parameters.Add("@Userid", SqlDbType.Int);
                     command.Parameters.Add("@FromDate", SqlDbType.DateTime);
                     command.Parameters.Add("@ToDate", SqlDbType.DateTime);
+					command.Parameters.Add("@Status", SqlDbType.Char);
 
-                    //substitute value
-                    command.Parameters["@Userid"].Value = request.Obj.UserId;
+					//substitute value
+					command.Parameters["@Userid"].Value = request.Obj.UserId;
                     command.Parameters["@FromDate"].Value = request.Obj.FromDate ;
                     command.Parameters["@ToDate"].Value = request.Obj.ToDate;
-                    //con.Open();
-                    SqlDataAdapter da = new SqlDataAdapter();
+					command.Parameters["@Status"].Value = request.Obj.Type;
+					//con.Open();
+					SqlDataAdapter da = new SqlDataAdapter();
                     da.SelectCommand = command;
 
                     da.Fill(ds);

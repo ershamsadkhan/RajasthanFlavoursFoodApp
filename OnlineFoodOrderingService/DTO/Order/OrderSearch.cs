@@ -11,5 +11,6 @@ namespace OnlineFoodOrderingService.DTO.Order
         public long UserId { get; set; }
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
+		public char Type { get; set; }
     }
 }
