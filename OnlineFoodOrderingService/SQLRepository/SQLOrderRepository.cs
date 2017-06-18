@@ -152,17 +152,19 @@ namespace OnlineFoodOrderingService.SQLRepository
 							UserId = long.Parse(ds.Tables[0].Rows[i]["Userid"].ToString()),
 							DeliveryAddress = ds.Tables[0].Rows[i]["DeliveryAddress"].ToString(),
 							UserName = ds.Tables[0].Rows[i]["UserName"].ToString(),
-							CityCode= int.Parse(ds.Tables[0].Rows[i]["CityCode"].ToString())
+							CityCode= int.Parse(ds.Tables[0].Rows[i]["CityCode"].ToString()),
+							OrderStatus= ds.Tables[0].Rows[i]["OrderStatus"].ToString(),
 						});
                     }
                     if (Orders.Count == 0)
                     {
-
-                        response.ErrMsg = "No Records Found";
+						response.Status = false;
+						response.ErrMsg = "No Records Found";
                     }
                     else
                     {
-                        response.ErrMsg = "Total "+Orders.Count.ToString()+" Records Found";
+						response.Status = true;
+						response.ErrMsg = "Total "+Orders.Count.ToString()+" Records Found";
                         response.ObjList = Orders;
                     }
 

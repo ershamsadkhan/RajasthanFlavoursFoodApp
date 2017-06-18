@@ -14,6 +14,7 @@ namespace OnlineFoodOrderingService.DTO.Order
 		public String UserName { get; set; }
 		public string DeliveryAddress { get; set; }
 		public int CityCode { get; set; }
+		public string OrderStatus { get; set; }
 
 		public IList<OrderLineItemDto> OrderLineItemList { get; set; }
 	}
