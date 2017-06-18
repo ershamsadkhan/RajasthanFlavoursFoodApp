@@ -8,10 +8,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace OnlineFoodOrderingService.Controllers
 {
-    [RoutePrefix("api/User")]
+	[EnableCors(origins: "*", headers: "*", methods: "*")]
+	[RoutePrefix("api/User")]
     public class UserController : ApiController
     {
         UserManager userManager;

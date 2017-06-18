@@ -377,13 +377,13 @@ namespace OnlineFoodOrderingService.SQLRepository
                     da.SelectCommand = command;
 
                     da.Fill(ds);
-                    itemResponse.Status = true;
-                    itemResponse.ErrMsg = "Updated successfully";
+					response.Status = true;
+					response.ErrMsg = "Updated successfully";
 
                 }
                 catch (Exception ex)
                 {
-                    response.Status = false;
+					response.Status = false;
                     response.ErrMsg = ex.Message;
                 }
                 finally

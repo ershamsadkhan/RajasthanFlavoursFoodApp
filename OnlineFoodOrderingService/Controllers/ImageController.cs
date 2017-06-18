@@ -5,18 +5,21 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Web;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace OnlineFoodOrderingService.Controllers
 {
-    public class ImageController : ApiController
+	[EnableCors(origins: "*", headers: "*", methods: "*")]
+	public class ImageController : ApiController
     {
 		[HttpGet]
 		public HttpResponseMessage GetImage(String ImageName)
 		{
 
-			String path = "E:\\images\\"+ImageName;
-			var fileStream = new FileStream(path, FileMode.Open);
+			String path = HttpContext.Current.Server.MapPath("~/images/")+ImageName;
+			var fileStream = new FileStream(path, FileMode.Open,FileAccess.Read);
 
 			var resp = new HttpResponseMessage()
 			{

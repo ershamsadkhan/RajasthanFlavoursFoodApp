@@ -129,13 +129,15 @@ namespace OnlineFoodOrderingService.SQLRepository
                     command.Parameters.Add("@Userid", SqlDbType.Int);
                     command.Parameters.Add("@FromDate", SqlDbType.DateTime);
                     command.Parameters.Add("@ToDate", SqlDbType.DateTime);
+					command.Parameters.Add("@Status", SqlDbType.Char);
 
-                    //substitute value
-                    command.Parameters["@Userid"].Value = request.Obj.UserId;
+					//substitute value
+					command.Parameters["@Userid"].Value = request.Obj.UserId;
                     command.Parameters["@FromDate"].Value = request.Obj.FromDate ;
                     command.Parameters["@ToDate"].Value = request.Obj.ToDate;
-                    //con.Open();
-                    SqlDataAdapter da = new SqlDataAdapter();
+					command.Parameters["@Status"].Value = request.Obj.Type;
+					//con.Open();
+					SqlDataAdapter da = new SqlDataAdapter();
                     da.SelectCommand = command;
 
                     da.Fill(ds);
@@ -150,17 +152,19 @@ namespace OnlineFoodOrderingService.SQLRepository
 							UserId = long.Parse(ds.Tables[0].Rows[i]["Userid"].ToString()),
 							DeliveryAddress = ds.Tables[0].Rows[i]["DeliveryAddress"].ToString(),
 							UserName = ds.Tables[0].Rows[i]["UserName"].ToString(),
-							CityCode= int.Parse(ds.Tables[0].Rows[i]["CityCode"].ToString())
+							CityCode= int.Parse(ds.Tables[0].Rows[i]["CityCode"].ToString()),
+							OrderStatus= ds.Tables[0].Rows[i]["OrderStatus"].ToString(),
 						});
                     }
                     if (Orders.Count == 0)
                     {
-
-                        response.ErrMsg = "No Records Found";
+						response.Status = false;
+						response.ErrMsg = "No Records Found";
                     }
                     else
                     {
-                        response.ErrMsg = "Total "+Orders.Count.ToString()+" Records Found";
+						response.Status = true;
+						response.ErrMsg = "Total "+Orders.Count.ToString()+" Records Found";
                         response.ObjList = Orders;
                     }
 

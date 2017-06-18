@@ -9,10 +9,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace OnlineFoodOrderingService.Controllers
 {
-    [RoutePrefix("api/Item")]
+	[EnableCors(origins: "*", headers: "*", methods: "*")]
+	[RoutePrefix("api/Item")]
     public class ItemController : ApiController
     {
         ItemManager itemManager;

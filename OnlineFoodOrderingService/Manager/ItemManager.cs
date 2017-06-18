@@ -18,6 +18,7 @@ namespace OnlineFoodOrderingService.Manager
 		{
 			this.repository = repository;
 			response = new Response<CategoryDto>();
+			ItemResponse = new Response<ItemDto>();
 		}
 
 		#region public methods
@@ -70,7 +71,7 @@ namespace OnlineFoodOrderingService.Manager
         public Response<ItemDto> UpdateItem(Request<ItemDto> request)
         {
             ItemResponse = ValidateItem(request);
-            if (response.Status == true)
+            if (ItemResponse.Status == true)
             {
                 ItemResponse = repository.UpdateItem(request);
             }
@@ -82,7 +83,7 @@ namespace OnlineFoodOrderingService.Manager
         #region private methods
         private Response<ItemDto> ValidateItem(Request<ItemDto> request)
 		{
-			response.Status = true;
+			ItemResponse.Status = true;
 			return ItemResponse;
 		}
         private Response<CategoryDto> ValidateItem(Request<CategoryDto> request)
