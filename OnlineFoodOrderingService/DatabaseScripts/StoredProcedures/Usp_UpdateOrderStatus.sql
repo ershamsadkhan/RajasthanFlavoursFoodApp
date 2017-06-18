@@ -1,9 +1,9 @@
 IF EXISTS ( SELECT * 
             FROM   sysobjects 
-            WHERE  id = object_id(N'[dbo].[Usp_UpdateOrderStatus]') 
+            WHERE  id = object_id(N'Usp_UpdateOrderStatus') 
                    and OBJECTPROPERTY(id, N'IsProcedure') = 1 )
 BEGIN
-    DROP PROCEDURE [dbo].Usp_UpdateOrderStatus
+    DROP PROCEDURE Usp_UpdateOrderStatus
 END
 GO
 --EXEC Usp_UpdateOrderStatus 3,C   --P:Placed C:Cancelled D:Delivered
@@ -35,7 +35,7 @@ BEGIN TRY
 	END
 	ELSE
 	BEGIN
-		IF(@OrderStatus='O')
+		IF(@OldOrderStatus='O' AND @OrderStatus='C')
 		BEGIN
 			SELECT @Status=0,@ErrMsg='Order is out for delivery and cannot be cancelled.'
 		END
