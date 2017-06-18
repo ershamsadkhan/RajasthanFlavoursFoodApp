@@ -39,12 +39,12 @@ namespace OnlineFoodOrderingService.SQLRepository
                 da.SelectCommand = command;
 
                 da.Fill(ds);
-                if (ds.Tables.Count>0)
-                {
-                    DateTime LastOfferDate = Convert.ToDateTime(ds.Tables[0].Rows[0]["OfferDate"]);
-                    DateDifference = (DateTime.Now - LastOfferDate).TotalDays;
+                //if (ds.Tables.Count>0)
+                //{
+                //    DateTime LastOfferDate = Convert.ToDateTime(ds.Tables[0].Rows[0]["OfferDate"]);
+                //    DateDifference = (DateTime.Now - LastOfferDate).TotalDays;
 
-                }
+                //}
 
 
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
