@@ -68,6 +68,7 @@ namespace OnlineFoodOrderingService.App_Start
             kernel.Bind<IUserRepository>().To<SQLUserRepository>();
             kernel.Bind<IItemRepository>().To<SQLItemRepository>();
             kernel.Bind<IOrderRepository>().To<SQLOrderRepository>();
-        }        
+            kernel.Bind<IOfferRepository>().To<SQLOfferRepository>();
+        }       
     }
 }
