@@ -215,6 +215,8 @@
     <Content Include="DatabaseScripts\StoredProcedures\Usp_UpdateOrderStatus.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\Usp_UserSignUp.sql" />
     <Content Include="DatabaseScripts\Table\Category.sql" />
+    <Content Include="DatabaseScripts\Table\Offer.sql" />
+    <Content Include="DatabaseScripts\Table\OfferHistory.sql" />
     <Content Include="DatabaseScripts\Table\Offers.sql" />
     <Content Include="DatabaseScripts\Table\Orders.sql" />
     <Content Include="DatabaseScripts\Table\Users.sql" />
@@ -246,10 +248,12 @@
     <Compile Include="Authorization\AuthorizeUsers.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\OfferController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DTO\Item\CategoryDto.cs" />
     <Compile Include="DTO\Item\ItemDto.cs" />
+    <Compile Include="DTO\Offer\OfferDto.cs" />
     <Compile Include="DTO\Order\OrderDto.cs" />
     <Compile Include="DTO\Order\OrderLineItemDto.cs" />
     <Compile Include="DTO\Order\OrderSearch.cs" />
@@ -261,9 +265,11 @@
     </Compile>
     <Compile Include="Handler\AuthHandler.cs" />
     <Compile Include="IRepository\IItemRepository.cs" />
+    <Compile Include="IRepository\IOfferRepository.cs" />
     <Compile Include="IRepository\IOrderRepository.cs" />
     <Compile Include="IRepository\IUserRepository.cs" />
     <Compile Include="Manager\ItemManager.cs" />
+    <Compile Include="Manager\OfferManager.cs" />
     <Compile Include="Manager\OrderManager.cs" />
     <Compile Include="Manager\UserManager.cs" />
     <Compile Include="Models\Enums\GetDescription.cs" />
@@ -276,6 +282,7 @@
     <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLRepository\SQLItemRepository.cs" />
+    <Compile Include="SQLRepository\SQLOfferRepository.cs" />
     <Compile Include="SQLRepository\SQLOrderRepository.cs" />
     <Compile Include="SQLRepository\SQLUserRepository.cs" />
   </ItemGroup>
@@ -304,6 +311,11 @@
     <Folder Include="DatabaseScripts\Functons\" />
     <Folder Include="Models\User\" />
     <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="Views\IOfferRepository\" />
+    <Folder Include="Views\OfferDto\" />
+    <Folder Include="Views\OfferManager\" />
+    <Folder Include="Views\Offer\" />
+    <Folder Include="Views\SQLOfferRepository\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="DatabaseScripts\Table\Image.sql" />
