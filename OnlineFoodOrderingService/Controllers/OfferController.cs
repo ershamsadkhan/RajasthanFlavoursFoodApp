@@ -1,6 +1,7 @@
 ﻿using OnlineFoodOrderingService.Authorization;
 using OnlineFoodOrderingService.DTO;
 using OnlineFoodOrderingService.DTO.Offer;
+using OnlineFoodOrderingService.DTO.Order;
 using OnlineFoodOrderingService.DTO.User;
 using OnlineFoodOrderingService.IRepository;
 using OnlineFoodOrderingService.Manager;
@@ -19,11 +20,13 @@ namespace OnlineFoodOrderingService.Controllers
     {
         OfferManager offerManager;
         Response<OfferDto> response;
+        Response<OrderDto> OrderResponse;
 
         public OfferController(IOfferRepository repository)
         {
             offerManager = new OfferManager(repository);
             response = new Response<OfferDto>();
+            OrderResponse = new Response<OrderDto>();
         }
         [Route("GetOffers")]
         [HttpPost]
@@ -31,6 +34,14 @@ namespace OnlineFoodOrderingService.Controllers
         {
             response = offerManager.GetOffers(request);
             return response;
+        }
+        [AuthorizeUser]
+        [Route("Applicableoffers")]
+        [HttpPost]
+        public Response<OrderDto> ApplicableOffers(Request<OrderDto> request)
+        {
+            OrderResponse = offerManager.ApplicableOffers(request);
+            return OrderResponse;
         }
 
 
