@@ -200,6 +200,7 @@
     <Content Include="DatabaseScripts\DDL\Order.sql" />
     <Content Include="DatabaseScripts\DDL\OrderLineItem.sql" />
     <Content Include="DatabaseScripts\DDL\User.sql" />
+    <Content Include="DatabaseScripts\DML\Offers.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\GetOrderDetails.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\GetOrders.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\GrandTotal.sql" />
@@ -309,7 +310,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="DatabaseScripts\DML\" />
     <Folder Include="DatabaseScripts\Functons\" />
     <Folder Include="Models\User\" />
     <Folder Include="obj\Debug\TempPE\" />
