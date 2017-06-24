@@ -12,5 +12,6 @@ namespace OnlineFoodOrderingService.DTO.Order
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
 		public char Type { get; set; }
+		public int CityCode { get; set; }
     }
 }

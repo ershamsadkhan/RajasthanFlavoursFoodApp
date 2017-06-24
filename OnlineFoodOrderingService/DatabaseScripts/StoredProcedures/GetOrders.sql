@@ -3,7 +3,8 @@ ALTER PROCEDURE Usp_GetOrders
 @Userid			NUMERIC(10)	=0,
 @FromDate		DateTime=Null,
 @ToDate			DateTime=Null,
-@Status			CHAR='' --'' means all orders P means past orders N means waitng for delivery
+@Status			CHAR='', --'' means all orders P means past orders N means waitng for delivery
+@CityCode		int=0
 
 As
 BEGIN	
@@ -14,6 +15,7 @@ SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
 			   o.OrderDate,
 			   U.Userid,
 			   U.UserName,
+			   U.UserPhoneNumber,
 			   o.OrderStatus,
 			   o.DeliveryAddress,
 			   o.CityCode,
@@ -31,6 +33,7 @@ SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
 		ON Gt.OrderId =o.OrderId
 		WHERE (ISNULL(@FromDate,'')='' OR  ISNULL(@ToDate,'')='' OR 
 			  CAST(o.OrderDate AS DATE) BETWEEN @FromDate AND @ToDate)
+			  AND (@CityCode=0 OR @CityCode=o.CityCode)
 		ORDER BY 1 DESC
 	END
 ELSE
@@ -40,6 +43,7 @@ ELSE
 			   o.OrderDate,
 			   U.Userid,
 			   U.UserName,
+			   U.UserPhoneNumber,
 			   o.OrderStatus,
 			   o.DeliveryAddress,
 			   o.CityCode,
@@ -64,6 +68,7 @@ ELSE
 			   o.OrderDate,
 			   U.Userid,
 			   U.UserName,
+			   U.UserPhoneNumber,
 			   o.OrderStatus,
 			   o.DeliveryAddress,
 			   o.CityCode,
@@ -89,6 +94,7 @@ ELSE
 			   o.OrderDate,
 			   U.Userid,
 			   U.UserName,
+			   U.UserPhoneNumber,
 			   o.OrderStatus,
 			   o.DeliveryAddress,
 			   o.CityCode,

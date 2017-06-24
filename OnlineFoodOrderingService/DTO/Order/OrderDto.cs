@@ -13,6 +13,7 @@ namespace OnlineFoodOrderingService.DTO.Order
 		public long GrandTotal { get; set; }
 		public long UserId { get; set; }
 		public string UserName { get; set; }
+		public string PhoneNumber { get; set; }
 		public string DeliveryAddress { get; set; }
 		public int CityCode { get; set; }
 		public string OrderStatus { get; set; }

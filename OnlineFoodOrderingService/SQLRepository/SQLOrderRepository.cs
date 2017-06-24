@@ -130,12 +130,14 @@ namespace OnlineFoodOrderingService.SQLRepository
                     command.Parameters.Add("@FromDate", SqlDbType.DateTime);
                     command.Parameters.Add("@ToDate", SqlDbType.DateTime);
 					command.Parameters.Add("@Status", SqlDbType.Char);
+					command.Parameters.Add("@CityCode", SqlDbType.Int);
 
 					//substitute value
 					command.Parameters["@Userid"].Value = request.Obj.UserId;
                     command.Parameters["@FromDate"].Value = request.Obj.FromDate ;
                     command.Parameters["@ToDate"].Value = request.Obj.ToDate;
 					command.Parameters["@Status"].Value = request.Obj.Type;
+					command.Parameters["@CityCode"].Value = request.Obj.CityCode;
 					//con.Open();
 					SqlDataAdapter da = new SqlDataAdapter();
                     da.SelectCommand = command;
@@ -150,6 +152,7 @@ namespace OnlineFoodOrderingService.SQLRepository
 							OrderDate = Convert.ToDateTime(ds.Tables[0].Rows[i]["OrderDate"].ToString()),
 							GrandTotal = int.Parse(ds.Tables[0].Rows[i]["GrandTotal"].ToString()),
 							UserId = long.Parse(ds.Tables[0].Rows[i]["Userid"].ToString()),
+							PhoneNumber = ds.Tables[0].Rows[i]["UserPhoneNumber"].ToString(),
 							DeliveryAddress = ds.Tables[0].Rows[i]["DeliveryAddress"].ToString(),
 							UserName = ds.Tables[0].Rows[i]["UserName"].ToString(),
 							CityCode= int.Parse(ds.Tables[0].Rows[i]["CityCode"].ToString()),

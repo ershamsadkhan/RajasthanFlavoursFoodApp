@@ -43,17 +43,21 @@ namespace OnlineFoodOrderingService.Manager
         public Response<OrderDto> GetOrders(Request<OrderSearch> request)
         {
             response = repository.GetOrders(request);
-			for (int i = 0; i < response.ObjList.Count(); i++) {
+			if (response.ObjList != null)
+			{
+				for (int i = 0; i < response.ObjList.Count(); i++)
+				{
 
-				Request<OrderDto> orderDetailsRequest = new Request<OrderDto>();
-				OrderDto reqOrderDto = new OrderDto();
-				reqOrderDto.OrderNo = response.ObjList[i].OrderNo;
-				orderDetailsRequest.Obj = reqOrderDto;
+					Request<OrderDto> orderDetailsRequest = new Request<OrderDto>();
+					OrderDto reqOrderDto = new OrderDto();
+					reqOrderDto.OrderNo = response.ObjList[i].OrderNo;
+					orderDetailsRequest.Obj = reqOrderDto;
 
-				Response<OrderDto> orderDetailsResponse = new Response<OrderDto>();
-				orderDetailsResponse=repository.GetOrderDetails(orderDetailsRequest);
+					Response<OrderDto> orderDetailsResponse = new Response<OrderDto>();
+					orderDetailsResponse = repository.GetOrderDetails(orderDetailsRequest);
 
-				response.ObjList[i].OrderLineItemList = orderDetailsResponse.Obj.OrderLineItemList;
+					response.ObjList[i].OrderLineItemList = orderDetailsResponse.Obj.OrderLineItemList;
+				}
 			}
             return response;
         }
