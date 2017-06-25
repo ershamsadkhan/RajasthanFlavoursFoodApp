@@ -205,7 +205,9 @@
     <Content Include="DatabaseScripts\StoredProcedures\Usp_AddCategory.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\Usp_AddItem.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\Usp_AddOrder.sql" />
+    <Content Include="DatabaseScripts\StoredProcedures\Usp_ApplyOffer.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\Usp_DeleteOrder.sql" />
+    <Content Include="DatabaseScripts\StoredProcedures\Usp_GetAppliedOffers.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\Usp_GetCategoryList.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\Usp_GetItemsList.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\Usp_UpdateOrderStatus.sql" />

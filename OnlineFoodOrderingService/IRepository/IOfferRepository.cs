@@ -14,7 +14,8 @@ namespace OnlineFoodOrderingService.IRepository
     {
         Response<OfferDto> GetOffers(Request<OfferDto> request);
         Response<OfferDto> ApplicableOffers(Request<OfferDto> request);
+		Response<OfferDto> GetAppliedOffers(long OrderNo);
 
 
-    }
+	}
 }

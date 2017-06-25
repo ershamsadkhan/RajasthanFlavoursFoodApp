@@ -36,6 +36,12 @@ namespace OnlineFoodOrderingService.Manager
             return response;
         }
 
-        #endregion
-    }
+		public Response<OfferDto> GetAppliedOffers(long OrderNo)
+		{
+			response = repository.GetAppliedOffers(OrderNo);
+			return response;
+		}
+
+		#endregion
+	}
 }

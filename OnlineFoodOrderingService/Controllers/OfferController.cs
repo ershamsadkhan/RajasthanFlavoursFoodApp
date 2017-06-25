@@ -44,7 +44,16 @@ namespace OnlineFoodOrderingService.Controllers
             return response;
         }
 
+		[AuthorizeUser]
+		[Route("GetAppliedOffers")]
+		[HttpPost]
+		public Response<OfferDto> GetAppliedOffers(long OrderNo)
+		{
+			response = offerManager.GetAppliedOffers(OrderNo);
+			return response;
+		}
 
 
-    }
+
+	}
 }
