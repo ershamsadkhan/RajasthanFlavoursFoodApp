@@ -1,9 +1,9 @@
 IF EXISTS ( SELECT * 
             FROM   sysobjects 
-            WHERE  id = object_id(N'[dbo].[Usp_AddOrder]') 
+            WHERE  id = object_id(N'[Usp_AddOrder]') 
                    and OBJECTPROPERTY(id, N'IsProcedure') = 1 )
 BEGIN
-    DROP PROCEDURE [dbo].Usp_AddOrder
+    DROP PROCEDURE Usp_AddOrder
 END
 GO
 --exec Usp_AddOrder @lineItemXml='<OrderLineItem>
@@ -32,6 +32,7 @@ BEGIN TRY
     DROP TABLE #tempOrdersLineItem
 
 	DECLARE @OrderNo int
+	DECLARE @GrandTotal NUMERIC(5)=0
 	DECLARE @tempOrderTable table (OrderNo int)
 	DECLARE @DocHandle int
 	EXEC sp_xml_preparedocument @DocHandle OUTPUT, @lineItemXml
@@ -88,6 +89,16 @@ BEGIN TRY
 	FROM #tempOrdersLineItem tli
 	INNER JOIN Items it
 	ON it.Itemid=tli.ItemId
+
+	--compute grand total
+	SELECT @GrandTotal=SUM (OLI. Price*OLI.Quantity) 
+			FROM Orders o
+			inner join OrderLineItem OLI
+			on o.OrderId=OLI.OrderId
+			WHERE o.OrderId=@OrderNo
+			group by OLI.OrderId
+
+	Update Orders set GrandTotal=@GrandTotal WHERE OrderId=@OrderNo
 
 	SELECT @Status=1,@ErrMsg='SuccessFull'
 	SELECT @Status AS Status,@ErrMsg AS ErrMsg,@OrderNo AS OrderNo

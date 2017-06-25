@@ -15,5 +15,6 @@ namespace OnlineFoodOrderingService.DTO.Offer
         public bool IsActive { get; set; }
         public int PercentOffer { get; set; }
         public int RsOffer { get; set; }
-    }
+		public string UserId { get; set; }
+	}
 }

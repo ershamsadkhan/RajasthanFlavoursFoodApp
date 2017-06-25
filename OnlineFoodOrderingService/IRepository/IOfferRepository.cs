@@ -13,7 +13,7 @@ namespace OnlineFoodOrderingService.IRepository
     public interface IOfferRepository 
     {
         Response<OfferDto> GetOffers(Request<OfferDto> request);
-        Response<OrderDto> ApplicableOffers(Request<OrderDto> request);
+        Response<OfferDto> ApplicableOffers(Request<OfferDto> request);
 
 
     }

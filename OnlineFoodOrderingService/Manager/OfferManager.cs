@@ -30,10 +30,10 @@ namespace OnlineFoodOrderingService.Manager
             return response;
         }
 
-        public Response<OrderDto> ApplicableOffers(Request<OrderDto> request)
+        public Response<OfferDto> ApplicableOffers(Request<OfferDto> request)
         {
-            OrderResponse = repository.ApplicableOffers(request);
-            return OrderResponse;
+			response = repository.ApplicableOffers(request);
+            return response;
         }
 
         #endregion

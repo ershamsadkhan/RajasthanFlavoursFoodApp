@@ -38,10 +38,10 @@ namespace OnlineFoodOrderingService.Controllers
         [AuthorizeUser]
         [Route("Applicableoffers")]
         [HttpPost]
-        public Response<OrderDto> ApplicableOffers(Request<OrderDto> request)
+        public Response<OfferDto> ApplicableOffers(Request<OfferDto> request)
         {
-            OrderResponse = offerManager.ApplicableOffers(request);
-            return OrderResponse;
+            response = offerManager.ApplicableOffers(request);
+            return response;
         }
 
 
