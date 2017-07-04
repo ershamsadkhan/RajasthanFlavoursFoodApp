@@ -94,7 +94,6 @@ namespace OnlineFoodOrderingService.Controllers
 			{
 				DataTable orderDataTable = ConvertToDataTable(response.ObjList);
 				string CSVdata = DataTableToCSV(orderDataTable, ',');
-				string path = "";
 				var bytes = Encoding.GetEncoding("iso-8859-1").GetBytes(CSVdata);
 				//var stream = new FileStream(path, FileMode.Open);
 				MemoryStream stream = new MemoryStream(bytes);
@@ -102,31 +101,49 @@ namespace OnlineFoodOrderingService.Controllers
 				result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.ms-excel");
 				result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
 				{
-					FileName = "OrderList"+DateTime.Now.Month+DateTime.Now.Day+DateTime.Now.Hour+DateTime.Now.Minute+".csv"
+					FileName = "OrderList" + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + ".xls"
 				};
 			}
 			return result;
 		}
 
 		#region private methods
-		private DataTable ConvertToDataTable<T>(IList<T> data)
+		private DataTable ConvertToDataTable(IList<OrderDto> data)
 		{
-			PropertyDescriptorCollection properties =
-			TypeDescriptor.GetProperties(typeof(T));
+
 			DataTable table = new DataTable();
-			foreach (PropertyDescriptor prop in properties)
-				table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
-			foreach (T item in data)
+
+			table.Columns.Add("OrderNo");
+			table.Columns.Add("OrderDate");
+			table.Columns.Add("UserName");
+			table.Columns.Add("PhoneNumber");
+			table.Columns.Add("DeliveryAddress");
+			table.Columns.Add("CityCode");
+			table.Columns.Add("OrderStatus");
+			table.Columns.Add("GrandTotal");
+			table.Columns.Add("AppliedOfferCode");
+			table.Columns.Add("GrandTotalAfterDiscount");
+
+			foreach (OrderDto item in data)
 			{
 				DataRow row = table.NewRow();
-				foreach (PropertyDescriptor prop in properties)
-					row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
+				row["OrderNo"] = item.OrderNo;
+				row["OrderDate"] = item.OrderDate;
+				row["UserName"] = item.UserName;
+				row["PhoneNumber"] = item.PhoneNumber;
+				row["DeliveryAddress"] = item.DeliveryAddress.Replace(",","");
+				row["CityCode"] = GetCity(item.CityCode);
+				row["OrderStatus"] = GetStatus(item.OrderStatus);
+				row["GrandTotal"] = item.GrandTotal;
+				row["AppliedOfferCode"] = item.AppliedOfferCode;
+				row["GrandTotalAfterDiscount"] = item.GrandTotalAfterDiscount;
+
 				table.Rows.Add(row);
 			}
 			return table;
 		}
 
-		private string DataTableToCSV( DataTable datatable, char seperator)
+		private string DataTableToCSV(DataTable datatable, char seperator)
 		{
 			StringBuilder sb = new StringBuilder();
 			for (int i = 0; i < datatable.Columns.Count; i++)
@@ -148,6 +165,48 @@ namespace OnlineFoodOrderingService.Controllers
 				sb.AppendLine();
 			}
 			return sb.ToString();
+		}
+
+		private string GetCity(int cityCode)
+		{
+			string city = "";
+			switch (cityCode)
+			{
+				case 1:
+					city = "Gomtinagar";
+					break;
+				case 2:
+					city = "Mahanagar";
+					break;
+				case 3:
+					city = "Indranagar";
+					break;
+				case 4:
+					city = "Gomtinagar Extension";
+					break;
+			}
+			return city;
+		}
+
+		private string GetStatus(string statusCode)
+		{
+			string status = "";
+			switch (statusCode)
+			{
+				case "P":
+					status = "Placed";
+					break;
+				case "O":
+					status = "Out For Delivery";
+					break;
+				case "C":
+					status = "Cancelled";
+					break;
+				case "D":
+					status = "Delivered";
+					break;
+			}
+			return status;
 		}
 		#endregion
 	}

@@ -5,9 +5,13 @@ using OnlineFoodOrderingService.IRepository;
 using OnlineFoodOrderingService.Manager;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
@@ -75,5 +79,80 @@ namespace OnlineFoodOrderingService.Controllers
 			response = mailHelper.SendEMail("shammyk123@gmail.com", EMailHelper.EMAIL_SUBJECT, emailBody);
 			return response; 
 		}
+
+		[Route("GetUsersExcel")]
+		[HttpPost]
+		public HttpResponseMessage GetUsersExcel(Request<UserDto> request)
+		{
+			HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+			response = userManager.GetUsersList(request);
+			if (response.Status == true)
+			{
+				DataTable orderDataTable = ConvertToDataTable(response.ObjList);
+				string CSVdata = DataTableToCSV(orderDataTable, ',');
+				var bytes = Encoding.GetEncoding("iso-8859-1").GetBytes(CSVdata);
+				//var stream = new FileStream(path, FileMode.Open);
+				MemoryStream stream = new MemoryStream(bytes);
+				result.Content = new StreamContent(stream);
+				result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.ms-excel");
+				result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+				{
+					FileName = "UserList" + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + ".xls"
+				};
+			}
+			return result;
+		}
+
+		#region private methods
+		private DataTable ConvertToDataTable(IList<UserDto> data)
+		{
+
+			DataTable table = new DataTable();
+
+			table.Columns.Add("UserName");
+			table.Columns.Add("PrimaryAddress");
+			table.Columns.Add("UserPhoneNumber");
+			table.Columns.Add("UserEmailAddress");
+			table.Columns.Add("RegisterDate");
+
+			foreach (UserDto item in data)
+			{
+				DataRow row = table.NewRow();
+				row["UserName"] = item.UserName;
+				row["PrimaryAddress"] = item.PrimaryAddress.Replace(",", "");
+				row["UserPhoneNumber"] = item.UserPhoneNumber;
+				row["UserEmailAddress"] = item.UserEmailAddress;
+				row["RegisterDate"] = item.RegisterDate;
+
+				table.Rows.Add(row);
+			}
+			return table;
+		}
+
+		private string DataTableToCSV(DataTable datatable, char seperator)
+		{
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < datatable.Columns.Count; i++)
+			{
+				sb.Append(datatable.Columns[i]);
+				if (i < datatable.Columns.Count - 1)
+					sb.Append(seperator);
+			}
+			sb.AppendLine();
+			foreach (DataRow dr in datatable.Rows)
+			{
+				for (int i = 0; i < datatable.Columns.Count; i++)
+				{
+					sb.Append(dr[i].ToString());
+
+					if (i < datatable.Columns.Count - 1)
+						sb.Append(seperator);
+				}
+				sb.AppendLine();
+			}
+			return sb.ToString();
+		}
+
+		#endregion
 	}
 }
