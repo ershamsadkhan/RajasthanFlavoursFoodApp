@@ -134,7 +134,7 @@ namespace OnlineFoodOrderingService.SQLRepository
 					}
 					if (offerDtoList.Count == 0)
 					{
-
+						response.ObjList = null;
 						response.ErrMsg = "No Applied Offers";
 						response.Status = false;
 
@@ -183,7 +183,18 @@ namespace OnlineFoodOrderingService.SQLRepository
 			{
 				Offerlist.Add(c40OfferDto);
 			}
-			response.ObjList = Offerlist;
+
+			if (Offerlist.Count > 0)
+			{
+				response.ObjList = Offerlist;
+				response.Status = true;
+				response.ErrMsg = "";
+			}
+			else
+			{
+				response.Status = false;
+				response.ErrMsg = "No Applicable Offers Found";
+			}
 
 			return response;
 

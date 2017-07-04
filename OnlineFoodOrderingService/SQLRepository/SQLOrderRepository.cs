@@ -10,6 +10,7 @@ using System.Data.SqlClient;
 using OnlineFoodOrderingService.Models;
 using System.Xml.Linq;
 using OnlineFoodOrderingService.Models.Enums;
+using OnlineFoodOrderingService.DTO.Offer;
 
 namespace OnlineFoodOrderingService.SQLRepository
 {
@@ -125,6 +126,9 @@ namespace OnlineFoodOrderingService.SQLRepository
 		public Response<OrderDto> GetOrders(Request<OrderSearch> request)
 		{
 			IList<OrderDto> Orders = new List<OrderDto>();
+			IOfferRepository offerRepository = new SQLOfferRepository();
+			OfferDto offerDto=null;
+
 			DataSet ds = new DataSet("GetOrders");
 			using (SqlConnection con = new SqlConnection(connection))
 			{
@@ -154,6 +158,19 @@ namespace OnlineFoodOrderingService.SQLRepository
 
 					for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
 					{
+						long grandTotakAfterDiscount = 0;
+						Response<OfferDto> offerResponse = offerRepository.GetAppliedOffers(int.Parse(ds.Tables[0].Rows[i]["OrderId"].ToString()));
+						if (offerResponse.ObjList != null && offerResponse.ObjList.Count > 0)
+						{
+							offerDto = offerResponse.ObjList[0];
+							grandTotakAfterDiscount = int.Parse(ds.Tables[0].Rows[i]["GrandTotal"].ToString()) - int.Parse(ds.Tables[0].Rows[i]["GrandTotal"].ToString()) * offerDto.PercentOffer / 100;
+						}
+						else
+						{
+							offerDto = null;
+							grandTotakAfterDiscount = int.Parse(ds.Tables[0].Rows[i]["GrandTotal"].ToString());
+						}
+
 						Orders.Add(new OrderDto
 						{
 							OrderNo = int.Parse(ds.Tables[0].Rows[i]["OrderId"].ToString()),
@@ -165,6 +182,8 @@ namespace OnlineFoodOrderingService.SQLRepository
 							UserName = ds.Tables[0].Rows[i]["UserName"].ToString(),
 							CityCode = int.Parse(ds.Tables[0].Rows[i]["CityCode"].ToString()),
 							OrderStatus = ds.Tables[0].Rows[i]["OrderStatus"].ToString(),
+							offerDto = offerDto,
+							GrandTotalAfterDiscount= grandTotakAfterDiscount
 						});
 					}
 					if (Orders.Count == 0)

@@ -19,7 +19,9 @@ namespace OnlineFoodOrderingService.DTO.Order
 		public string OrderStatus { get; set; }
 
 		public string AppliedOfferCode { get; set; }
+		public long GrandTotalAfterDiscount { get; set; }
 
-        public IList<OrderLineItemDto> OrderLineItemList { get; set; }
+		public OfferDto offerDto { get; set; }
+		public IList<OrderLineItemDto> OrderLineItemList { get; set; }
 	}
 }

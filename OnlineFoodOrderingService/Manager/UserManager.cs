@@ -78,7 +78,7 @@ namespace OnlineFoodOrderingService.Manager
 			if (response.Status == true)
 			{
 				response.Status = false;
-				response.ErrMsg = "Invalid UserName And Password.";
+				response.ErrMsg = "User Name already exists.";
 
 			}
 			else

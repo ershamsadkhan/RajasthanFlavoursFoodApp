@@ -1,4 +1,5 @@
-﻿using OnlineFoodOrderingService.DTO;
+﻿using Common.Helpers;
+using OnlineFoodOrderingService.DTO;
 using OnlineFoodOrderingService.DTO.User;
 using OnlineFoodOrderingService.IRepository;
 using OnlineFoodOrderingService.Manager;
@@ -63,6 +64,16 @@ namespace OnlineFoodOrderingService.Controllers
 		{
 			response = userManager.UpdateProfile(request);
 			return response;
+		}
+
+		[Route("SendMail")]
+		[HttpPost]
+		public Response<UserDto> SendMail(Request<UserDto> request)
+		{
+			EMailHelper mailHelper = new EMailHelper(EMailHelper.EMAIL_SENDER, EMailHelper.EMAIL_CREDENTIALS, EMailHelper.SMTP_CLIENT);
+			var emailBody = String.Format(EMailHelper.EMAIL_BODY);
+			response = mailHelper.SendEMail("shammyk123@gmail.com", EMailHelper.EMAIL_SUBJECT, emailBody);
+			return response; 
 		}
 	}
 }

@@ -1,5 +1,5 @@
 
---Usp_OfferAppliedInLast30Days 4,'C200'
+--Usp_OfferAppliedInLast30Days 7,'C200'
 IF EXISTS ( SELECT * 
             FROM   sysobjects 
             WHERE  id = object_id(N'[Usp_OfferAppliedInLast30Days]') 
@@ -14,24 +14,43 @@ CREATE PROCEDURE Usp_OfferAppliedInLast30Days
 
 AS
 BEGIN
-
-       DECLARE @retVal int=0
-
-	   Select @retVal=COUNT(*)
-	   from 
-	   offer ohf INNER JOIN OfferHistory oh
-	   ON ohf.OfferId=oh.OfferId
-	   INNER JOIN Orders orders
-	   on oh.OrderId= orders.OrderId 
-	   where OfferDate > DATEADD(day,-30,GETDATE()) and orders.Userid=@Userid and OfferCode=@OfferCode
-
-	   if(@retVal=0)
-	   BEGIN
-		   Select  ohf.OfferCode ,ohf.OfferHeader, ohf.OfferDescription, ohf.PercentOffer, ohf.RsOffer
+DECLARE @retVal int=0
+if(@OfferCode='C200')
+	BEGIN
+		   Select @retVal=COUNT(*)
 		   from 
-		   offer ohf 
-		   where OfferCode=@OfferCode
-	   END
+		   offer ohf INNER JOIN OfferHistory oh
+		   ON ohf.OfferId=oh.OfferId
+		   INNER JOIN Orders orders
+		   on oh.OrderId= orders.OrderId 
+		   where OfferDate > DATEADD(day,-30,GETDATE()) and orders.Userid=@Userid and OfferCode=@OfferCode
+
+		   if(@retVal=0)
+		   BEGIN
+			   Select  ohf.OfferCode ,ohf.OfferHeader, ohf.OfferDescription, ohf.PercentOffer, ohf.RsOffer
+			   from 
+			   offer ohf 
+			   where OfferCode=@OfferCode
+		   END
+	END
+ELSE
+	BEGIN
+		   Select @retVal=COUNT(*)
+		   from 
+		   offer ohf INNER JOIN OfferHistory oh
+		   ON ohf.OfferId=oh.OfferId
+		   INNER JOIN Orders orders
+		   on oh.OrderId= orders.OrderId 
+		   where OfferDate > DATEADD(day,-30,GETDATE()) and orders.Userid=@Userid and (OfferCode=@OfferCode OR OfferCode='C200')
+
+		   if(@retVal=0)
+		   BEGIN
+			   Select  ohf.OfferCode ,ohf.OfferHeader, ohf.OfferDescription, ohf.PercentOffer, ohf.RsOffer
+			   from 
+			   offer ohf 
+			   where OfferCode=@OfferCode
+		   END
+	END
 END
 
  
