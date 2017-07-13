@@ -70,13 +70,29 @@ namespace OnlineFoodOrderingService.Controllers
 			return response;
 		}
 
-		[Route("SendMail")]
+		[Route("ForgotPassword")]
 		[HttpPost]
-		public Response<UserDto> SendMail(Request<UserDto> request)
+		public Response<UserDto> ForgotPassword(string UserName)
 		{
-			EMailHelper mailHelper = new EMailHelper(EMailHelper.EMAIL_SENDER, EMailHelper.EMAIL_CREDENTIALS, EMailHelper.SMTP_CLIENT);
-			var emailBody = String.Format(EMailHelper.EMAIL_BODY);
-			response = mailHelper.SendEMail("shammyk123@gmail.com", EMailHelper.EMAIL_SUBJECT, emailBody);
+			EMailHelper mailHelper = new EMailHelper();
+
+			response = userManager.GetForgotPasswordDetails(UserName);
+			if (response.Status == true)
+			{
+				mailHelper.RECIPIENT = response.ObjList[0].UserEmailAddress;
+				mailHelper.SUBJECT = "Forgot Password";
+				mailHelper.MESSAGE = "Your Password Is: " + response.ObjList[0].UserPwd;
+
+				response = mailHelper.SendEMail(mailHelper.RECIPIENT, mailHelper.SUBJECT, mailHelper.MESSAGE);
+				if (response.Status == true)
+				{
+					response.ErrMsg = "Your password has sent on your Email";
+				}
+			}
+			else
+			{
+				response.ErrMsg = "Email Server Error";
+			}
 			return response; 
 		}
 

@@ -5,7 +5,7 @@ using System.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using OnlineFoodOrderingService.DTO.Email;
 
 namespace OnlineFoodOrderingService.Manager
 {
@@ -61,6 +61,11 @@ namespace OnlineFoodOrderingService.Manager
 			return response;
 		}
 
+		public Response<UserDto> GetForgotPasswordDetails(string UserName)
+		{
+			response = repository.GetForgotPasswordDetails(UserName);
+			return response;
+		}
 		#endregion
 		// private methods
 

@@ -86,7 +86,7 @@ namespace OnlineFoodOrderingService.SQLRepository
             DataSet ds = new DataSet("UserDetails");
             SqlConnection con = new SqlConnection(connection);
 
-            SqlCommand command = new SqlCommand("select UserName,PrimaryAddress,UserPhoneNumber,UserEmailAddress from Users where Userid=@Userid", con);
+            SqlCommand command = new SqlCommand("select UserName,PrimaryAddress,UserPhoneNumber,UserEmailAddress,UserPwd from Users where Userid=@Userid", con);
             try
             {
                 command.Parameters.Add("@Userid", SqlDbType.VarChar);
@@ -104,7 +104,8 @@ namespace OnlineFoodOrderingService.SQLRepository
                         UserName = ds.Tables[0].Rows[i]["UserName"].ToString(),
                         PrimaryAddress = ds.Tables[0].Rows[i]["PrimaryAddress"].ToString(),
 						UserPhoneNumber = ds.Tables[0].Rows[i]["UserPhoneNumber"].ToString(),
-						UserEmailAddress = ds.Tables[0].Rows[i]["UserEmailAddress"].ToString()
+						UserEmailAddress = ds.Tables[0].Rows[i]["UserEmailAddress"].ToString(),
+						UserPwd= ds.Tables[0].Rows[i]["UserPwd"].ToString()
 					});
 
                 }
@@ -366,6 +367,64 @@ namespace OnlineFoodOrderingService.SQLRepository
 			}
 
 
+		}
+
+		public Response<UserDto> GetForgotPasswordDetails(string UserName)
+		{
+
+			IList<UserDto> UserList = new List<UserDto>();
+			DataSet ds = new DataSet("ForgotPasswordDetails");
+			SqlConnection con = new SqlConnection(connection);
+
+			SqlCommand command = new SqlCommand("select UserName,PrimaryAddress,UserPhoneNumber,UserEmailAddress,UserPwd from Users where UserName=@UserName", con);
+			try
+			{
+				command.Parameters.Add("@UserName", SqlDbType.VarChar);
+				command.Parameters["@UserName"].Value = UserName;
+
+				SqlDataAdapter da = new SqlDataAdapter();
+				da.SelectCommand = command;
+
+				da.Fill(ds);
+
+				for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+				{
+					UserList.Add(new UserDto
+					{
+						UserName = ds.Tables[0].Rows[i]["UserName"].ToString(),
+						PrimaryAddress = ds.Tables[0].Rows[i]["PrimaryAddress"].ToString(),
+						UserPhoneNumber = ds.Tables[0].Rows[i]["UserPhoneNumber"].ToString(),
+						UserEmailAddress = ds.Tables[0].Rows[i]["UserEmailAddress"].ToString(),
+						UserPwd = ds.Tables[0].Rows[i]["UserPwd"].ToString()
+					});
+
+				}
+				if (UserList.Count > 0)
+				{
+					response.Status = true;
+					response.ErrMsg = "";
+					response.ObjList = UserList;
+				}
+				else
+				{
+					response.Status = false;
+					response.ErrMsg = "User does not exist";
+				}
+
+			}
+			catch (Exception ex)
+			{
+				response.Status = false;
+				response.ErrMsg = ex.Message;
+			}
+			finally
+			{
+				if (con.State == ConnectionState.Open)
+				{
+					con.Close();
+				}
+			}
+			return response;
 		}
 	}
 }

@@ -7,72 +7,63 @@ using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
+using Temboo.Core;
+using Temboo.Library.Google.Gmail;
 namespace Common.Helpers
 {
 
 	public class EMailHelper
 	{
-		Response<UserDto> response=new Response<UserDto>();
+		Response<UserDto> response = new Response<UserDto>();
 		// Note: To send email you need to add actual email id and credential so that it will work as expected  
-		public static readonly string EMAIL_SENDER = "shammyk123@gmail.com"; // change it to actual sender email id or get it from UI input  
-		public static readonly string EMAIL_CREDENTIALS = "zoyarand"; // Provide credentials   
-		public static readonly string SMTP_CLIENT = "smtp.gmail.com"; // as we are using outlook so we have provided smtp-mail.outlook.com   
-		public static readonly string EMAIL_BODY = "Reset your Password ";
-		public static readonly string EMAIL_SUBJECT = "Reset your Password ";
-		private string senderAddress;
-		private string clientAddress;
-		private string netPassword;
-		public EMailHelper(string sender, string Password, string client)
+		public static readonly string EMAIL_SENDER = "flavofrajasthan@gmail.com"; // change it to actual sender email id or get it from UI input  
+		public static readonly string EMAIL_CREDENTIALS = "Shammyk@123456"; // Provide credentials   
+		public static readonly string SMTP_CLIENT = "relay-hosting.secureserver.net"; // as we are using outlook so we have provided smtp-mail.outlook.com 
+		public static readonly Int32 SMTP_PORT = 567;
+
+		public string RECIPIENT = "";
+		public string SUBJECT = "";
+		public string MESSAGE = "";
+
+		public EMailHelper()
 		{
-			senderAddress = sender;
-			netPassword = Password;
-			clientAddress = client;
 		}
 		public Response<UserDto> SendEMail(string recipient, string subject, string message)
 		{
-			//Intialise Parameters  
-			//System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient(clientAddress);
-			//client.Port = 587;
-			//client.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
-			//client.UseDefaultCredentials = false;
-			//System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(senderAddress, netPassword);
-			//client.EnableSsl = true;
-			//client.Credentials = credentials;
-			//try
-			//{
-			//	var mail = new System.Net.Mail.MailMessage(senderAddress.Trim(), recipient.Trim());
-			//	mail.Subject = subject;
-			//	mail.Body = message;
-			//	//System.Net.Mail.Attachment attachment;  
-			//	//attachment = new Attachment(@"C:\Users\XXX\XXX\XXX.jpg");  
-			//	//mail.Attachments.Add(attachment);  
-			//	client.Send(mail);
 
-			//	response.Status = true;
-			//}
-			//catch (Exception ex)
-			//{
-			//	response.Status = false;
-			//	response.ErrMsg = ex.InnerException.ToString();
-			//}
 			try
 			{
-				MailMessage mail = new MailMessage();
-				mail.To.Add("shammyk123@gmail.com");
-				mail.From = new MailAddress("ershamsadkhan@gmail.com");
-				mail.Subject ="hello";
-				mail.Body = "Hello";
-				mail.IsBodyHtml = true;
+				//MailAddress to = new MailAddress(recipient);
+				//MailAddress from = new MailAddress(EMAIL_SENDER);
+				//MailMessage mail = new MailMessage(from, to);
 
-				var client = new SmtpClient("smtp.gmail.com", 587)
-				{
-					UseDefaultCredentials = false,
-				EnableSsl = false
-				};
-				client.Credentials = new System.Net.NetworkCredential
-				("ershamsadkhan@gmail.com", "Shammyk@123567");
+				//mail.Subject = subject;
+				//mail.Body = message;
 
-				client.Send(mail);
+				//SmtpClient smtp = new SmtpClient();
+				//smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+				//smtp.Host = SMTP_CLIENT;
+				//smtp.Port = SMTP_PORT;
+				//smtp.UseDefaultCredentials = false;
+				//smtp.Credentials = new NetworkCredential(
+				//	EMAIL_SENDER, EMAIL_CREDENTIALS);
+
+				//smtp.EnableSsl = true;
+				//smtp.Send(mail);
+				TembooSession session = new TembooSession("flavoursofrajasthan", "myFirstApp", "d0XPIC2zUt49k2WAEYEFAQxYcIsW94VB");
+				SendEmail sendEmailChoreo = new SendEmail(session);
+
+				// Set inputs
+				sendEmailChoreo.setFromAddress("flavofrajasthan@gmail.com");
+				sendEmailChoreo.setUsername("flavofrajasthan@gmail.com");
+				sendEmailChoreo.setSubject(subject);
+				sendEmailChoreo.setToAddress(recipient);
+				sendEmailChoreo.setMessageBody(message);
+				sendEmailChoreo.setPassword("wssuuusiysusppny");
+
+				// Execute Choreo
+				SendEmailResultSet sendEmailResults = sendEmailChoreo.execute();
+
 				response.Status = true;
 			}
 			catch (Exception ex)

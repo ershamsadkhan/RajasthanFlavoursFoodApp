@@ -1,5 +1,5 @@
 --EXEC Usp_GetOrderDetails 4
-ALTER PROCEDURE Usp_GetOrderDetails
+CREATE PROCEDURE Usp_GetOrderDetails
 @Orderid  NUMERIC(10)	=0
 As
 BEGIN

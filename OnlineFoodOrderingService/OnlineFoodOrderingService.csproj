@@ -157,6 +157,10 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="TembooSDK, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\TembooSDK.dll</HintPath>
+    </Reference>
     <Reference Include="WebActivator, Version=1.5.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\WebActivator.1.5.1\lib\net40\WebActivator.dll</HintPath>
       <Private>True</Private>
@@ -196,10 +200,12 @@
     <Content Include="bin\System.Web.Http.dll" />
     <Content Include="bin\System.Web.Http.WebHost.dll" />
     <Content Include="bin\System.Web.Mvc.dll" />
+    <Content Include="bin\TembooSDK.dll" />
     <Content Include="DatabaseScripts\DDL\Items.sql" />
     <Content Include="DatabaseScripts\DDL\Order.sql" />
     <Content Include="DatabaseScripts\DDL\OrderLineItem.sql" />
     <Content Include="DatabaseScripts\DDL\User.sql" />
+    <Content Include="DatabaseScripts\DML\Items.sql" />
     <Content Include="DatabaseScripts\DML\Offers.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\GetOrderDetails.sql" />
     <Content Include="DatabaseScripts\StoredProcedures\GetOrders.sql" />
@@ -256,6 +262,7 @@
     <Compile Include="Controllers\OfferController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="DTO\Email\EmailDto.cs" />
     <Compile Include="DTO\Item\CategoryDto.cs" />
     <Compile Include="DTO\Item\ItemDto.cs" />
     <Compile Include="DTO\Offer\OfferDto.cs" />

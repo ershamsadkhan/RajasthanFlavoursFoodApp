@@ -1,9 +1,9 @@
 IF EXISTS ( SELECT * 
             FROM   sysobjects 
-            WHERE  id = object_id(N'[dbo].[Usp_UserSignUp]') 
+            WHERE  id = object_id(N'Usp_UserSignUp') 
                    and OBJECTPROPERTY(id, N'IsProcedure') = 1 )
 BEGIN
-    DROP PROCEDURE [dbo].Usp_UserSignUp
+    DROP PROCEDURE Usp_UserSignUp
 END
 GO
 --EXEC Usp_UserSignUp 1,'Shamsad','Shamsad','Kndivali',1

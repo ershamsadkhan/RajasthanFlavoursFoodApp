@@ -1,5 +1,5 @@
 --EXEC Usp_GetOrders 1,'2017-06-07','2017-06-17','N'
-ALTER PROCEDURE Usp_GetOrders
+CREATE PROCEDURE Usp_GetOrders
 @Userid			NUMERIC(10)	=0,
 @FromDate		DateTime=Null,
 @ToDate			DateTime=Null,
