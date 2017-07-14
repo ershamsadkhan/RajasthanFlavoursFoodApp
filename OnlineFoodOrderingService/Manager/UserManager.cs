@@ -49,6 +49,12 @@ namespace OnlineFoodOrderingService.Manager
 			return response;
 		}
 
+		public Response<UserDto> LogInForUsers(Request<UserDto> request)
+		{
+			response = repository.GetLogInDetailsForUsers(request);
+			return response;
+		}
+
 		public Response<UserDto> GetUsersList(Request<UserDto> request)
 		{
 			response = repository.GetUsersList(request);

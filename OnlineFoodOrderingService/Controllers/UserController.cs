@@ -46,6 +46,14 @@ namespace OnlineFoodOrderingService.Controllers
             return response;
         }
 
+		[Route("LogInForUsers")]
+		[HttpPost]
+		public Response<UserDto> LogInForUsers(Request<UserDto> request)
+		{
+			response = userManager.LogInForUsers(request);
+			return response;
+		}
+
 		[Route("GetUsersList")]
 		[HttpPost]
 		public Response<UserDto> GetUsersList(Request<UserDto> request)
